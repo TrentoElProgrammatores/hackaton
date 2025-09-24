@@ -17,3 +17,13 @@ installo l'app:
 ```sh
 python manage.py startapp scambio
 ```
+
+
+## pagine create
+
+-home
+-dettaglio prodotti
+-cronologia scambi/prodotti
+-inserimento prodotto
+-aggiungi noleggio
+

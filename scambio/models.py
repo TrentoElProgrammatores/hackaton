@@ -65,10 +65,16 @@ class Scambi(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     merceScambiata=models.ForeignKey(MerceScambiata, on_delete=models.CASCADE)
     createdAt=models.DateTimeField(default=timezone.now, null=True, blank=True) 
-    da=models.ForeignKey(Location, on_delete=models.CASCADE, related_name="mittente")
-    a=models.ForeignKey(Location, on_delete=models.CASCADE, related_name="destinatario")
+    da=models.ForeignKey(Location, on_delete=models.CASCADE, related_name="mittente_scambio")
+    a=models.ForeignKey(Location, on_delete=models.CASCADE, related_name="destinatario_scambio")
 
 
+class Noleggio(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    createdAt=models.DateTimeField(default=timezone.now, null=True, blank=True) 
+    da=models.ForeignKey(Location, on_delete=models.CASCADE, related_name="mittente_noleggio")
+    a=models.CharField(max_length=200)
+    ritorno=models.DateTimeField(default=timezone.now, null=True, blank=True) 
 
 
 

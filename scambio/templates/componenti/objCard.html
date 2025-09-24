@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Oggetti in Evidenza</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    .object-card {
+      transition: all 0.3s ease;
+      border: 1px solid #dee2e6;
+      border-radius: 0.75rem;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .object-card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+    }
+
+    .object-card img {
+      height: 12rem;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .object-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .like-btn {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(4px);
+      border: none;
+      border-radius: 50%;
+      padding: 0.5rem;
+      transition: background 0.2s ease;
+    }
+
+    .like-btn:hover {
+      background: #fff;
+      color: #dc3545;
+    }
+
+    .badge-category {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
+      background-color: #0d6efd;
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 0.35em 0.65em;
+      border-radius: 0.5rem;
+    }
+
+    .object-card .card-body h5 {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .object-card .card-body p {
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin-bottom: 0.75rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .object-card .meta {
+      font-size: 0.8rem;
+      color: #6c757d;
+      line-height: 1.4;
+    }
+
+    section.featured {
+      padding: 4rem 1rem;
+      background: #f8f9fa;
+    }
+
+    section.featured h2 {
+      font-size: 2rem;
+      font-weight: 700;
+    }
+
+    section.featured p {
+      color: #6c757d;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    section.featured .btn-lg {
+      padding: 0.9rem 2rem;
+      font-size: 1rem;
+      font-weight: 500;
+      border-radius: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  
+  <section class="featured">
+    <div class="container">
+      <!-- Titolo + descrizione -->
+      <div class="text-center mb-5">
+        <h2>Oggetti in Evidenza</h2>
+        <p>
+          Scopri gli oggetti più interessanti della nostra comunità. 
+          Ogni scambio è un'opportunità per dare nuova vita a ciò che ami.
+        </p>
+      </div>
+
+      <!-- Griglia oggetti -->
+      <div class="row g-4">
+        <!-- Card 1 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card object-card">
+            <div class="position-relative">
+              <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&h=300&fit=crop" class="card-img-top" alt="Macchina del Caffè Vintage">
+              <button class="like-btn"><i class="bi bi-heart"></i></button>
+              <span class="badge-category">Casa</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Macchina del Caffè Vintage</h5>
+              <p class="card-text">Bellissima macchina del caffè anni '70 completamente funzionante. Perfetta per chi ama il vintage.</p>
+              <div class="meta">📍 Milano, Centro<br>👤 Maria R.</div>
+            </div>
+            <div class="card-footer bg-white border-0 pt-0">
+              <button class="btn btn-outline-primary w-100">Proponi Scambio</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card object-card">
+            <div class="position-relative">
+              <img src="https://images.unsplash.com/photo-1558618575-fcd6c89cd544?w=400&h=300&fit=crop" class="card-img-top" alt="Bicicletta da Città">
+              <button class="like-btn"><i class="bi bi-heart"></i></button>
+              <span class="badge-category">Trasporti</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Bicicletta da Città</h5>
+              <p class="card-text">Bici in ottime condizioni, perfetta per girare in città. Inclusi lucchetto e casco.</p>
+              <div class="meta">📍 Roma, Trastevere<br>👤 Luca M.</div>
+            </div>
+            <div class="card-footer bg-white border-0 pt-0">
+              <button class="btn btn-outline-primary w-100">Proponi Scambio</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card object-card">
+            <div class="position-relative">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop" class="card-img-top" alt="Collezione Libri Fantasy">
+              <button class="like-btn"><i class="bi bi-heart"></i></button>
+              <span class="badge-category">Libri</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Collezione Libri Fantasy</h5>
+              <p class="card-text">Set completo della saga del Signore degli Anelli e altri classici del fantasy. Tutti in ottimo stato.</p>
+              <div class="meta">📍 Firenze, Centro<br>👤 Elena S.</div>
+            </div>
+            <div class="card-footer bg-white border-0 pt-0">
+              <button class="btn btn-outline-primary w-100">Proponi Scambio</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card object-card">
+            <div class="position-relative">
+              <img src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&h=300&fit=crop" class="card-img-top" alt="Chitarra Acustica">
+              <button class="like-btn"><i class="bi bi-heart"></i></button>
+              <span class="badge-category">Musica</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Chitarra Acustica</h5>
+              <p class="card-text">Chitarra acustica Yamaha, suono cristallino. Ideale per principianti o musicisti esperti.</p>
+              <div class="meta">📍 Napoli, Vomero<br>👤 Andrea T.</div>
+            </div>
+            <div class="card-footer bg-white border-0 pt-0">
+              <button class="btn btn-outline-primary w-100">Proponi Scambio</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card object-card">
+            <div class="position-relative">
+              <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&h=300&fit=crop" class="card-img-top" alt="Set Pentole Professionali">
+              <button class="like-btn"><i class="bi bi-heart"></i></button>
+              <span class="badge-category">Cucina</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Set Pentole Professionali</h5>
+              <p class="card-text">Set completo di pentole da chef, antiaderenti. Perfetto per chi ama cucinare.</p>
+              <div class="meta">📍 Torino, Centro<br>👤 Giulia B.</div>
+            </div>
+            <div class="card-footer bg-white border-0 pt-0">
+              <button class="btn btn-outline-primary w-100">Proponi Scambio</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="col-12 col-md-6 col-lg-4">
+          <div class="card object-card">
+            <div class="position-relative">
+              <img src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop" class="card-img-top" alt="Console Videogiochi Retro">
+              <button class="like-btn"><i class="bi bi-heart"></i></button>
+              <span class="badge-category">Gaming</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Console Videogiochi Retro</h5>
+              <p class="card-text">Nintendo 64 con controller e giochi classici. Funziona perfettamente, pura nostalgia.</p>
+              <div class="meta">📍 Bologna, Università<br>👤 Marco F.</div>
+            </div>
+            <div class="card-footer bg-white border-0 pt-0">
+              <button class="btn btn-outline-primary w-100">Proponi Scambio</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pulsanti finali -->
+      <div class="text-center mt-5">
+        <div class="d-flex flex-column flex-sm-row gap-3 justify-content-center">
+          <button class="btn btn-primary btn-lg">Vedi Tutti gli Oggetti</button>
+          <button class="btn btn-outline-secondary btn-lg">Aggiungi il Tuo Oggetto</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
