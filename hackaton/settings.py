@@ -25,7 +25,15 @@ SECRET_KEY = 'django-insecure-x=0hv&6@o2f9xxv@6^07blsjwv2%6dzz4@6=1m@gz48j5z93hp
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
+
+AUTH_USER_MODEL = 'scambio.Sede'
+
+import os
+MEDIA_URL = '/media/'  # L'URL attraverso cui accedere ai file media
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR,'static/')
 
 
 # Application definition
@@ -37,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'scambio'
 ]
 
 MIDDLEWARE = [
