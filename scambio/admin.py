@@ -11,4 +11,7 @@ admin.site.register(Scatola)
 admin.site.register(Categoria)
 admin.site.register(OggettoCategoria)
 
+admin.site.register(Scambi)
+admin.site.register(MerceScambiata)
+
 

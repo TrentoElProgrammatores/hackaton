@@ -115,9 +115,10 @@
       size: "{{item.dimensione}}",
       qrValue: "https://scambio-oggetti.it/product/1",
       history: [
-        { date: "2024-01-15", owner: "Luca Bianchi", location: "Roma", action: "Primo proprietario" },
-        { date: "2024-03-22", owner: "Anna Verdi", location: "Firenze", action: "Scambiato con bicicletta" },
-        { date: "2024-06-10", owner: "Marco Rossi", location: "Milano", action: "Scambiato con libri fantasy" },
+        {% for scambio in scambi %}
+        { date: "{{scambio.createdAt}}", da: "{{scambio.da.sede.nome}}", location: "{{scambio.a.location.nome}}", a: "{{scambio.a.sede.nome}}" },
+        {% endfor %}
+        
       ]
     };
 
@@ -152,7 +153,7 @@
       div.innerHTML = `
         <div class="history-dot"></div>
         <div>
-          <div class="fw-medium">${entry.owner} <span class="text-muted small">• ${entry.location}</span></div>
+          <div class="fw-medium">${entry.da} => ${entry.a}<span class="text-muted small">• ${entry.location}</span></div>
           <div class="text-muted small">${entry.action}</div>
           <div class="text-muted fst-italic small">${new Date(entry.date).toLocaleDateString('it-IT')}</div>
         </div>
