@@ -1,6 +1,6 @@
 # forms.py
 from django import forms
-from .models import Oggetto, Location, Scatola  # importa i modelli corretti
+from .models import Oggetto, Location, Scatola, Sede  # importa i modelli corretti
 
 class UploadItemForm(forms.ModelForm):
     # Sovrascrivo i campi per poter controllare widget / required / choices in modo chiaro
@@ -152,5 +152,33 @@ class UploadScatolaForm(forms.ModelForm):
     class Meta:
         model = Scatola
         fields = ('descrizione', 'location')
+
+#to do test
+class UploadLocationForm(forms.ModelForm):
+    nome = forms.CharField(
+        label="Nome",
+        max_length=200,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Nome della location',
+            'class': 'form-control',
+            'id': 'nome'
+        })
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)  # l'utente loggato
+        super().__init__(*args, **kwargs)
+
+    def save(self, commit=True):
+        instance = super().save(commit=False)
+        if self.user:
+            instance.sede = self.user  # assegna automaticamente la sede
+        if commit:
+            instance.save()
+        return instance
+
+    class Meta:
+        model = Location
+        fields = ('nome',)
 
 
