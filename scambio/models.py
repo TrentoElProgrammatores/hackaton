@@ -11,7 +11,8 @@ from django.utils import timezone
 class Categoria(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     nome = models.CharField(max_length=200)
-
+    def __str__(self):
+        return self.nome
 
 class Sede(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -19,7 +20,7 @@ class Sede(AbstractUser):
     indirizzo=models.CharField(max_length=200)
 
     def __str__(self):
-        return self.username
+        return self.nome
 
 class Location(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

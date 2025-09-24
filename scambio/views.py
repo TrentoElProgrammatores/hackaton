@@ -35,6 +35,8 @@ def prodotto(request,id):
     data={'item':item}
     categoria=OggettoCategoria.objects.filter(oggetto=item).first()
     data.update({'categoria':categoria})
+    scambio=MerceScambiata.objects.filter(oggetto=item)
+    data.update({'scambio':scambio})
     return render(request, 'prodotto.html',data)
 
 def addScatola(request):
