@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render,redirect
 from .forms import *
+from .models import *
 
 # Create your views here.
 
@@ -31,8 +32,10 @@ def prodotto(request,id):
         item=Oggetto.objects.get(id=id)
     except Oggetto.DoesNotExist:
         return redirect("home")
-
-    return render(request, 'prodotto.html',{'item':item})
+    data={'item':item}
+    categoria=OggettoCategoria.objects.filter(oggetto=item).first()
+    data.update({'categoria':categoria})
+    return render(request, 'prodotto.html',data)
 
 def addScatola(request):
     if request.method == 'POST':
