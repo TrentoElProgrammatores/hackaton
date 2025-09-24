@@ -25,5 +25,6 @@ urlpatterns = [
     #path("__reload__/", include("django_browser_reload.urls")),
     path('', views.home, name='home'),
     path('aggiungi/item', views.addItem, name='addItem'),
+    path('aggiungi/scatola', views.addScatola, name='addScatola'),
     path('prodotto/<str:id>', views.prodotto, name='prodotto'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

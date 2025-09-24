@@ -31,5 +31,26 @@ def prodotto(request,id):
         item=Oggetto.objects.get(id=id)
     except Oggetto.DoesNotExist:
         return redirect("home")
-    
+
     return render(request, 'prodotto.html',{'item':item})
+
+def addScatola(request):
+    if request.method == 'POST':
+        form = UploadScatolaForm(request.POST, request.FILES, user=request.user)
+        print(form.errors)
+        if form.is_valid():
+            scatola = form.save(commit=False)
+
+            # Se il modello Scatola ha un campo owner e non lo gestisci già nel form.save()
+            # scatola.owner = request.user
+
+            scatola.save()
+            form.save_m2m()  # serve solo se hai campi ManyToMany (puoi anche toglierlo se non ne hai)
+
+            # 🔁 Dopo il salvataggio puoi reindirizzare dove preferisci:
+            return redirect('home')  # oppure 'lista_scatole', 'dashboard', ecc.
+
+    else:
+        form = UploadScatolaForm(user=request.user)
+
+    return render(request, 'aggiungiScatola.html', {'form': form})

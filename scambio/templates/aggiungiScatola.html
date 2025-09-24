@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aggiungi Scatola</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .form-section {
+            padding: 4rem 1rem;
+            background-color: #f8f9fa;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        {% include "componenti/header.html" %}
+    </nav>
+
+    <section class="form-section">
+        <div class="container">
+            <div class="mx-auto" style="max-width: 650px;">
+                <div class="card shadow">
+                    <div class="card-header text-center">
+                        <h2 class="fw-bold">Aggiungi una Scatola</h2>
+                        <p class="text-muted mb-0">Crea una nuova scatola per organizzare i tuoi oggetti</p>
+                    </div>
+                    <div class="card-body">
+                        <form id="addScatolaForm" method="post" novalidate enctype="multipart/form-data">
+                            {% csrf_token %}
+
+                            <!-- Descrizione -->
+                            <div class="mb-3">
+                                <label for="descrizione" class="form-label">Descrizione</label>
+                                <textarea name="descrizione" class="form-control" id="descrizione" rows="4"
+                                    placeholder="Inserisci una descrizione (opzionale)">{{ form.descrizione.value }}</textarea>
+                                {% if form.descrizione.errors %}
+                                    <div class="text-danger small">{{ form.descrizione.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Location -->
+                            <div class="mb-3">
+                                <label for="location" class="form-label">Location *</label>
+                                {{ form.location }}
+                                {% if form.location.errors %}
+                                    <div class="text-danger small">{{ form.location.errors }}</div>
+                                {% endif %}
+                            </div>
+
+                            <!-- Submit -->
+                            <div class="mt-4">
+                                <button type="submit" class="btn btn-primary w-100">Crea Scatola</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Toast container -->
+    <div class="toast-container"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const form = document.getElementById("addScatolaForm");
+        const toastContainer = document.querySelector(".toast-container");
+
+        function showToast(title, message, type = "success") {
+            const toastEl = document.createElement("div");
+            toastEl.className = `toast align-items-center text-bg-${type} border-0`;
+            toastEl.setAttribute("role", "alert");
+            toastEl.setAttribute("aria-live", "assertive");
+            toastEl.setAttribute("aria-atomic", "true");
+
+            toastEl.innerHTML = `
+                <div class="d-flex">
+                    <div class="toast-body">
+                        <strong>${title}:</strong> ${message}
+                    </div>
+                    <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                </div>
+            `;
+
+            toastContainer.appendChild(toastEl);
+            const bsToast = new bootstrap.Toast(toastEl);
+            bsToast.show();
+            toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
+        }
+
+        form.addEventListener("submit", function (e) {
+            // Se vuoi validazione JS base:
+            const location = document.getElementById("id_location").value;
+            if (!location) {
+                e.preventDefault();
+                showToast("Errore", "Seleziona una location prima di procedere", "danger");
+            }
+        });
+    </script>
+</body>
+</html>
