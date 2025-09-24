@@ -12,3 +12,8 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+installo l'app:
+
+```sh
+python manage.py startapp scambio
+```
