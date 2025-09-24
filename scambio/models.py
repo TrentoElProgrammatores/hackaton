@@ -24,6 +24,10 @@ class Sede(AbstractUser):
 class Location(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     sede = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    nome=models.CharField(max_length=200, default="Campeione 1")
+
+    def __str__(self):
+        return self.nome
 
 class Scatola(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

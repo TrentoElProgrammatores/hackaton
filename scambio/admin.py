@@ -6,3 +6,4 @@ admin.site.register(Oggetto)
 
 admin.site.register(Sede)
 
+admin.site.register(Location)
