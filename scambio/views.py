@@ -16,11 +16,20 @@ def addItem(request):
         if form.is_valid():
             obj = form.save(commit=False)
             # se Oggetto ha un campo owner:
-            # obj.owner = request.user
+            obj.proprietario = request.user
             obj.save()
             form.save_m2m()
             # redirect o risposta
+            return redirect('home')
     else:
         form = UploadItemForm(user=request.user)
 
     return render(request, 'aggiungiItem.html', {'form': form})
+
+def prodotto(request,id):
+    try:
+        item=Oggetto.objects.get(id=id)
+    except Oggetto.DoesNotExist:
+        return redirect("home")
+    
+    return render(request, 'prodotto.html',{'item':item})

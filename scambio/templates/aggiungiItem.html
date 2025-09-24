@@ -151,7 +151,6 @@
         {% include "componenti/header.html" %}
 
     </nav>
-    {{form}}
     <!-- Sezione Form -->
     <section class="form-section">
         <div class="container">
@@ -162,67 +161,41 @@
                         <p class="text-muted mb-0">Condividi un oggetto che vorresti scambiare con la community</p>
                     </div>
                     <div class="card-body">
-                        <form id="addProductForm" novalidate>
-
+                        <form id="addProductForm" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
                             <!-- Titolo -->
                             <div class="mb-3">
-                                <label for="title" class="form-label">Titolo *</label>
-                                <input type="text" class="form-control" id="title"
-                                    placeholder="Es. Chitarra acustica vintage" required>
+                                <label for="titolo" class="form-label">Titolo *</label>
+                                {{form.titolo}}
+                                
                             </div>
 
                             <!-- Descrizione -->
                             <div class="mb-3">
-                                <label for="description" class="form-label">Descrizione *</label>
-                                <textarea class="form-control" id="description" rows="4"
-                                    placeholder="Descrivi l'oggetto..." required></textarea>
+                                <label for="descrizione" class="form-label">Descrizione *</label>
+                                    {{form.descrizione}}
+
                             </div>
 
                             <!-- Immagine -->
                             <div class="mb-3">
                                 <label for="image" class="form-label">Immagine</label>
-                                <input class="form-control" type="file" id="image" accept="image/*">
+                                {{form.immagine}}
                             </div>
 
                             <!-- Select multipli -->
                             <div class="row g-3">
                                 <div class="col-md-4">
-                                    <label for="location" class="form-label">Città *</label>
-                                    <select id="location" class="form-select" required>
-                                        <option value="">Seleziona città</option>
-                                        <option>Milano</option>
-                                        <option>Roma</option>
-                                        <option>Napoli</option>
-                                        <option>Torino</option>
-                                        <option>Palermo</option>
-                                        <option>Genova</option>
-                                        <option>Bologna</option>
-                                        <option>Firenze</option>
-                                    </select>
+                                    <label for="location" class="form-label">Location *</label>
+                                    {{form.location}}
                                 </div>
                                 <div class="col-md-4">
-                                    <label for="group" class="form-label">Categoria *</label>
-                                    <select id="group" class="form-select" required>
-                                        <option value="">Seleziona categoria</option>
-                                        <option>Elettronica</option>
-                                        <option>Abbigliamento</option>
-                                        <option>Casa e Giardino</option>
-                                        <option>Sport e Tempo Libero</option>
-                                        <option>Libri e Riviste</option>
-                                        <option>Giocattoli</option>
-                                        <option>Musica</option>
-                                        <option>Arte e Collezionismo</option>
-                                    </select>
+                                    <label for="group" class="form-label">Scatola *</label>
+                                    {{form.scatola}}
                                 </div>
                                 <div class="col-md-4">
                                     <label for="size" class="form-label">Dimensione *</label>
-                                    <select id="size" class="form-select" required>
-                                        <option value="">Seleziona dimensione</option>
-                                        <option>Piccolo</option>
-                                        <option>Medio</option>
-                                        <option>Grande</option>
-                                        <option>Extra Large</option>
-                                    </select>
+                                    {{form.dimensione}}
                                 </div>
                             </div>
 
@@ -241,53 +214,7 @@
     <!-- Toast container -->
     <div class="toast-container"></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const form = document.getElementById("addProductForm");
-        const toastContainer = document.querySelector(".toast-container");
 
-        function showToast(title, message, type = "success") {
-            const toastEl = document.createElement("div");
-            toastEl.className = `toast align-items-center text-bg-${type} border-0`;
-            toastEl.setAttribute("role", "alert");
-            toastEl.setAttribute("aria-live", "assertive");
-            toastEl.setAttribute("aria-atomic", "true");
-
-            toastEl.innerHTML = `
-        <div class="d-flex">
-          <div class="toast-body">
-            <strong>${title}:</strong> ${message}
-          </div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-        </div>
-      `;
-
-            toastContainer.appendChild(toastEl);
-            const bsToast = new bootstrap.Toast(toastEl);
-            bsToast.show();
-
-            toastEl.addEventListener("hidden.bs.toast", () => toastEl.remove());
-        }
-
-        form.addEventListener("submit", function (e) {
-            e.preventDefault();
-
-            const title = document.getElementById("title").value.trim();
-            const description = document.getElementById("description").value.trim();
-            const location = document.getElementById("location").value;
-            const group = document.getElementById("group").value;
-            const size = document.getElementById("size").value;
-
-            if (!title || !description || !location || !group || !size) {
-                showToast("Errore", "Compila tutti i campi obbligatori", "danger");
-                return;
-            }
-
-            showToast("Successo", "Il tuo oggetto è stato aggiunto con successo!");
-
-            form.reset();
-        });
-    </script>
 </body>
 
 </html>

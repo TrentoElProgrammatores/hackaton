@@ -37,7 +37,7 @@ class Scatola(models.Model):
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
-        return self.username
+        return self.location.nome
 
 class Oggetto(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)

@@ -8,7 +8,7 @@ class UploadItemForm(forms.ModelForm):
         label='Titolo',
         widget=forms.TextInput(attrs={
             'placeholder': 'Titolo oggetto',
-            'class': 'input pl-10',
+            'class': 'form-control',
             'id': 'titolo'
         })
     )
@@ -18,7 +18,7 @@ class UploadItemForm(forms.ModelForm):
         required=False,
         widget=forms.Textarea(attrs={
             'placeholder': 'Descrizione (opzionale)',
-            'class': 'input pl-10',
+            'class': 'form-control',
             'id': 'descrizione',
             'rows': 4,
         })
@@ -29,7 +29,7 @@ class UploadItemForm(forms.ModelForm):
         queryset=Location.objects.none(),
         empty_label='Seleziona una location',
         widget=forms.Select(attrs={
-            'class': 'w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200',
+            'class': 'form-select',
             'required': True,
         })
     )
@@ -38,7 +38,7 @@ class UploadItemForm(forms.ModelForm):
         queryset=Scatola.objects.none(),
         required=False,
         widget=forms.Select(attrs={
-            'class': 'w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200',
+            'class': 'form-select',
         })
     )
 
@@ -50,7 +50,7 @@ class UploadItemForm(forms.ModelForm):
     dimensione = forms.ChoiceField(
         choices=DIM_CHOICES,
         widget=forms.Select(attrs={
-            'class': 'w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200',
+            'class': 'form-select',
             'required': True,
         })
     )
@@ -61,7 +61,7 @@ class UploadItemForm(forms.ModelForm):
         widget=forms.FileInput(attrs={
             'id': 'profilePhoto',
             'accept': 'image/*',
-            'class': 'sr-only',
+            'class': 'form-control',
         })
     )
 
@@ -78,10 +78,11 @@ class UploadItemForm(forms.ModelForm):
             print("User", self.user)
             try:
                 self.fields['location'].queryset = Location.objects.filter(sede=self.user)
-                #self.fields['scatola'].queryset = Scatola.objects.filter(owner=self.user)
+                self.fields['scatola'].queryset = Scatola.objects.filter(location__sede=self.user)
             except Exception:
                 # fallback generico
-                self.fields['scatola'].queryset = Scatola.objects.all()
+                self.fields['location'].queryset = Location.objects.none()
+                self.fields['scatola'].queryset = Scatola.objects.none()
             # esempio di help_text che hai voluto mostrare
             self.fields['titolo'].help_text = f"Form creato da {self.user.username}"
         else:

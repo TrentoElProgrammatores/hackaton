@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dettaglio Prodotto</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <style>
+    body {
+      background: linear-gradient(to bottom right, #f8f9fa, #eef2f7);
+      min-height: 100vh;
+    }
+    .badge-primary {
+      background-color: #0d6efd;
+    }
+    .qr-container {
+      background: #fff;
+      padding: 1rem;
+      border-radius: .5rem;
+      display: inline-block;
+    }
+    .history-entry {
+      border-bottom: 1px solid #dee2e6;
+      padding-bottom: 1rem;
+    }
+    .history-entry:last-child {
+      border-bottom: none;
+    }
+    .history-dot {
+      width: 12px;
+      height: 12px;
+      background: #0d6efd;
+      border-radius: 50%;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+    <nav>
+        {% include "componenti/header.html" %}
+    </nav>
+
+
+  <main class="container py-5">
+
+    <div class="row g-5 mb-5">
+      <!-- Left column -->
+      <div class="col-lg-6">
+        <div class="card mb-4">
+          <div class="position-relative">
+            <img src="{{item.immagine.url}}" id="product-image" class="card-img-top" alt="Prodotto">
+            <span class="badge badge-primary position-absolute top-0 start-0 m-3" id="product-category">
+              Musica
+            </span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <h2 class="card-title" id="product-title">Chitarra Acustica Vintage</h2>
+            <div class="text-muted small mb-2">
+              📍 <span id="product-location">Milano</span> • 👤 <span id="product-owner">Marco Rossi</span>
+            </div>
+            <p class="card-text" id="product-description">
+              Una bellissima chitarra acustica in ottime condizioni. Perfetta per chi vuole iniziare a suonare o per musicisti esperti.
+            </p>
+            <div class="d-flex gap-2">
+              <span class="badge bg-light text-dark border" id="product-group">Strumenti</span>
+              <span class="badge bg-light text-dark border" id="product-size">Grande</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column (QR code) -->
+      <div class="col-lg-6">
+        <div class="card">
+          <div class="card-body text-center">
+            <h4 class="card-title mb-3">Codice QR Prodotto</h4>
+            <div class="qr-container mb-3">
+              <canvas id="qr-code"></canvas>
+            </div>
+            <button id="downloadQR" class="btn btn-primary w-100 mb-2">⬇ Scarica QR Code</button>
+            <p class="text-muted small">
+              Scansiona per accedere velocemente a questo prodotto
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- History -->
+    <div class="card">
+      <div class="card-body">
+        <h4 class="card-title mb-4">Cronologia Scambi</h4>
+        <div id="history-list"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Mock product data
+    const product = {
+      title: "{{item.titolo}}",
+      description: "{{item.descrizione}}",
+      imageUrl: "{{item.immagine.url}}",
+      category: "Musica",
+      location: "Milano",
+      ownerName: "{{item.proprietario.nome}}",
+      group: "Strumenti",
+      size: "{{item.dimensione}}",
+      qrValue: "https://scambio-oggetti.it/product/1",
+      history: [
+        { date: "2024-01-15", owner: "Luca Bianchi", location: "Roma", action: "Primo proprietario" },
+        { date: "2024-03-22", owner: "Anna Verdi", location: "Firenze", action: "Scambiato con bicicletta" },
+        { date: "2024-06-10", owner: "Marco Rossi", location: "Milano", action: "Scambiato con libri fantasy" },
+      ]
+    };
+
+    // Popola i dati nel DOM
+    document.getElementById("product-title").textContent = product.title;
+    document.getElementById("product-description").textContent = product.description;
+    document.getElementById("product-image").src = product.imageUrl;
+    document.getElementById("product-category").textContent = product.category;
+    document.getElementById("product-location").textContent = product.location;
+    document.getElementById("product-owner").textContent = product.ownerName;
+    document.getElementById("product-group").textContent = product.group;
+    document.getElementById("product-size").textContent = product.size;
+
+    // Genera QR code
+    QRCode.toCanvas(document.getElementById('qr-code'), product.qrValue, { width: 200 });
+
+    // Scarica QR code
+    document.getElementById("downloadQR").addEventListener("click", () => {
+      const canvas = document.getElementById("qr-code");
+      const pngFile = canvas.toDataURL("image/png");
+      const downloadLink = document.createElement("a");
+      downloadLink.download = `qr-${product.title.replace(/\s+/g, '-').toLowerCase()}.png`;
+      downloadLink.href = pngFile;
+      downloadLink.click();
+    });
+
+    // Cronologia
+    const historyContainer = document.getElementById("history-list");
+    product.history.forEach(entry => {
+      const div = document.createElement("div");
+      div.className = "d-flex gap-3 mb-3 history-entry";
+      div.innerHTML = `
+        <div class="history-dot"></div>
+        <div>
+          <div class="fw-medium">${entry.owner} <span class="text-muted small">• ${entry.location}</span></div>
+          <div class="text-muted small">${entry.action}</div>
+          <div class="text-muted fst-italic small">${new Date(entry.date).toLocaleDateString('it-IT')}</div>
+        </div>
+      `;
+      historyContainer.appendChild(div);
+    });
+  </script>
+
+</body>
+</html>
