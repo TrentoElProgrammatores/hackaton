@@ -205,6 +205,3 @@ class SedeLoginForm(AuthenticationForm):
             'placeholder': 'Password'
         })
     )
-
-
-

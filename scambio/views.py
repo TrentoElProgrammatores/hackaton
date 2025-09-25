@@ -6,6 +6,9 @@ from .forms import *
 from .models import *
 from django.contrib.auth import login, logout
 from django.conf import settings
+import json
+from django.http import JsonResponse
+
 # Create your views here.
 
 
@@ -108,9 +111,10 @@ def sedeLogout(request):
 
 
 def editProduct(request,id):
+    sedi=Sede.objects.all().exclude(id=request.user.id)
+    return render(request, 'editProduct.html',{'sedi':sedi})
 
 
-    return render(request, 'editProduct.html')
 
 def confermaPrenotazione(request, item_id):
     item = get_object_or_404(Oggetto, id=item_id)
@@ -133,3 +137,23 @@ def confermaPrenotazione(request, item_id):
 
     # Mostra la pagina di conferma
     return render(request, "confermaPrenotazione.html", {"item": item})
+def apiLocation(request,id):
+    try:
+        sede=Sede.objects.get(id=id)
+    except:
+        return redirect("home")
+    locations=Location.objects.filter(sede=sede)
+    locations = json.dumps([{'id': loc.id.urn.replace('urn:uuid:',''), 'nome': loc.nome} for loc in locations])
+    return render(request, 'api.html',{"locations":locations})
+
+def apiScatole(request,id):
+    print(id)
+    try:
+        sede=Sede.objects.get(id=id)
+    except:
+        return render(request, 'api.html',{"locations":[]})
+
+    scatole=Scatola.objects.filter(location__sede=sede)
+    print(scatole)
+    scatole = json.dumps([{'id': loc.id.urn.replace('urn:uuid:',''), 'descrizione': loc.descrizione} for loc in scatole])
+    return render(request, 'api.html',{"locations":scatole})

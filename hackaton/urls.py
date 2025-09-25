@@ -32,4 +32,7 @@ urlpatterns = [
     path('login/', views.sedeLogin, name="sedeLogin"),
     path('logout/', views.sedeLogout, name='sedeLogout'),
     path("confermaPrenotazione/<uuid:item_id>/", views.confermaPrenotazione, name="confermaPrenotazione")
+    path('api/locations/<str:id>', views.apiLocation),
+    path('api/scatole/<str:id>', views.apiScatole),
+    path('scatole/<str:id>', views.apiScatole),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
