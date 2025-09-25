@@ -31,7 +31,7 @@ urlpatterns = [
     path('item/edit/<str:id>', views.editProduct, name='editProduct'),
     path('login/', views.sedeLogin, name="sedeLogin"),
     path('logout/', views.sedeLogout, name='sedeLogout'),
-    path("confermaPrenotazione/<uuid:item_id>/", views.confermaPrenotazione, name="confermaPrenotazione")
+    path("confermaPrenotazione/<uuid:item_id>/", views.confermaPrenotazione, name="confermaPrenotazione"),
     path('api/locations/<str:id>', views.apiLocation),
     path('api/scatole/<str:id>', views.apiScatole),
     path('scatole/<str:id>', views.apiScatole),
