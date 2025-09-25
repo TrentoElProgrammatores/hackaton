@@ -123,17 +123,28 @@ class UploadScatolaForm(forms.ModelForm):
         })
     )
 
+    items = forms.ModelChoiceField(
+        queryset=Location.objects.all(),
+        empty_label='Seleziona una location',
+        widget=forms.Select(attrs={
+            'class': 'form-select',
+            'required': True,
+        })
+    )
+
     def __init__(self, *args, **kwargs):
         # recupera lo user passato dalla view
         self.user = kwargs.pop('user', None)
         super().__init__(*args, **kwargs)
-
         # Popolamento dinamico del campo location
         if self.user is not None:
             try:
+                print("User", Oggetto.objects.filter(location__sede=self.user))
                 self.fields['location'].queryset = Location.objects.filter(sede=self.user)
+                self.fields['items'].queryset = Oggetto.objects.filter(location__sede=self.user)
             except Exception:
                 self.fields['location'].queryset = Location.objects.all()
+                self.fields['items'].queryset = Oggetto.objects.none()
         else:
             self.fields['location'].queryset = Location.objects.none()
 
@@ -152,7 +163,7 @@ class UploadScatolaForm(forms.ModelForm):
 
     class Meta:
         model = Scatola
-        fields = ('descrizione', 'location')
+        fields = ('descrizione', 'location','items')
 
 class UploadLocationForm(forms.ModelForm):
     nome = forms.CharField(

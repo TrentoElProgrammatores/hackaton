@@ -49,6 +49,15 @@
                                     <div class="text-danger small">{{ form.location.errors }}</div>
                                 {% endif %}
                             </div>
+                            
+                            <!-- Location -->
+                            <div class="mb-3">
+                                <label for="location" class="form-label">items *</label>
+                                {{ form.items }}
+                                {% if form.items.errors %}
+                                    <div class="text-danger small">{{ form.items.errors }}</div>
+                                {% endif %}
+                            </div>
 
                             <!-- Submit -->
                             <div class="mt-4">

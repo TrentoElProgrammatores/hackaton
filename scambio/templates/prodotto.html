@@ -118,7 +118,8 @@
         {% for scambio in scambi %}
         { date: "{{scambio.scambio.createdAt}}", da: "{{scambio.scambio.da.sede.nome}}", a: "{{scambio.scambio.a.sede.nome}}" ,daLocation: "{{scambio.scambio.da.nome}}",aLocation: "{{scambio.scambio.a.nome}}",},
         {% endfor %}
-      ]
+      ],
+      scatola: "{{item.scatola.nome}}"
     };
 
     // Popola i dati nel DOM
