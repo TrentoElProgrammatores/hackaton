@@ -157,3 +157,12 @@ def apiScatole(request,id):
     print(scatole)
     scatole = json.dumps([{'id': loc.id.urn.replace('urn:uuid:',''), 'descrizione': loc.descrizione} for loc in scatole])
     return render(request, 'api.html',{"locations":scatole})
+
+
+def iMieiOggetti(request):
+    # Prende tutti gli oggetti di cui l'utente loggato è proprietario
+    oggetti = Oggetto.objects.filter(proprietario=request.user)
+    context = {
+        'oggetti': oggetti,
+    }
+    return render(request, 'iMieiOggetti.html', context)

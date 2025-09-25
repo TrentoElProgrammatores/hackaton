@@ -13,7 +13,7 @@ class Categoria(models.Model):
     nome = models.CharField(max_length=200)
     def __str__(self):
         return self.nome
-    
+
 
 
 class Sede(AbstractUser):
@@ -47,7 +47,7 @@ class Oggetto(models.Model):
     titolo = models.CharField(max_length=200)
     descrizione = models.TextField()
     proprietario = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    scatola = models.ForeignKey(Scatola, on_delete=models.CASCADE)
+    scatola = models.ForeignKey(Scatola, on_delete=models.CASCADE,blank=True,null=True)
 
     # WARN: La location della scatola ha la priorità
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
@@ -62,19 +62,19 @@ class Oggetto(models.Model):
 class OggettoCategoria(models.Model):
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE)
     oggetto = models.ForeignKey(Oggetto, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return f"cat: {self.categoria.nome}, oggetto: {self.oggetto.titolo}"
 
 
 class Scambi(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    createdAt=models.DateTimeField(default=timezone.now, null=True, blank=True) 
+    createdAt=models.DateTimeField(default=timezone.now, null=True, blank=True)
     da=models.ForeignKey(Location, on_delete=models.CASCADE, related_name="mittente_scambio")
     a=models.ForeignKey(Location, on_delete=models.CASCADE, related_name="destinatario_scambio")
     def __str__(self):
         return f"Scambio da {self.da.sede.nome}({self.da.nome}) a {self.a.nome}"
-    
+
 class MerceScambiata(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     oggetto=models.ForeignKey(Oggetto, on_delete=models.CASCADE, blank=True, null=True)

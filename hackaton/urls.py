@@ -35,4 +35,5 @@ urlpatterns = [
     path('api/locations/<str:id>', views.apiLocation),
     path('api/scatole/<str:id>', views.apiScatole),
     path('scatole/<str:id>', views.apiScatole),
+    path('iMieiOggetti/', views.iMieiOggetti, name='iMieiOggetti'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
