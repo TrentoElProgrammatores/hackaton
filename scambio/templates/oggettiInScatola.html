@@ -11,27 +11,46 @@
     {% include "componenti/header.html" %}
   </nav>
 
-<section class="objects-section container py-5">
+<section class="objects-section container py-5 position-relative">
     <h1 class="mb-4 text-center">Oggetti nella scatola: {{ scatola.descrizione|default:"x" }}</h1>
+
+    <!-- Pulsante aggiungi oggetto in alto a destra -->
+
+    <a href="{% url 'aggiungi_oggetto' scatola.id %}"
+    class="btn btn-primary position-absolute top-0 end-0 m-3">
+    + Aggiungi oggetto
+    </a>
+
     {% if oggetti %}
-    <div class="row g-4">
+    <div class="row g-4 mt-5">
       {% for item in oggetti %}
       <div class="col-md-4">
         <div class="card card-object shadow-sm">
           <img src="{{ item.immagine.url |default:'/static/img/placeholder.png' }}" class="card-img-top" alt="{{ item.titolo }}">
-          <div class="card-body">
+        <div class="card-body">
             <h5 class="card-title">{{ item.titolo|default:"x" }}</h5>
             <p class="card-text">{{ item.descrizione|default:"x" }}</p>
-            <a href="{% url 'prodotto' item.id %}" class="btn btn-outline-primary w-100">Dettagli</a>
-          </div>
+
+            <div class="d-flex gap-2 mt-3">
+                <!-- Pulsante Dettagli -->
+                <a href="{% url 'prodotto' item.id %}" class="btn btn-outline-primary w-50">Dettagli</a>
+
+                <!-- Pulsante Rimuovi dalla scatola -->
+                <form action="{% url 'rimuovi_dalla_scatola' item.id %}" method="post" class="w-50">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger w-100">Rimuovi dalla scatola</button>
+                </form>
+            </div>
+        </div>
         </div>
       </div>
       {% endfor %}
     </div>
     {% else %}
-    <p class="text-center">Questa scatola è vuota.</p>
+    <p class="text-center mt-5">Questa scatola è vuota.</p>
     {% endif %}
 </section>
+
 
 </body>
 </html>

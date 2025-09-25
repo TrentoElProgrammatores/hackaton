@@ -200,9 +200,43 @@ def oggettiInScatola(request, scatola_id):
     return render(request, "oggettiInScatola.html", {"scatola": scatola, "oggetti": oggetti})
 
 
+def aggiungi_oggetto_view(request, scatola_id):
+    scatola = get_object_or_404(Scatola, id=scatola_id)
+
+    # Oggetti disponibili (non ancora in nessuna scatola)
+    oggetti_disponibili = Oggetto.objects.filter(scatola__isnull=True)
+
+    context = {
+        'scatola': scatola,
+        'oggetti': oggetti_disponibili,
+    }
+    return render(request, 'aggiungi_oggetto.html', context)
 
 
-# def oggettiInScatola(request, scatola_id):
-#     scatola = get_object_or_404(Scatola, id=scatola_id, location__sede=request.user)
-#     oggetti = Oggetto.objects.filter(scatola=scatola)
-#     return render(request, "oggettiInScatola.html", {"scatola": scatola, "oggetti": oggetti})
+def aggiungi_oggetto_scatola(request, scatola_id, oggetto_id):
+    scatola = get_object_or_404(Scatola, id=scatola_id)
+    oggetto = get_object_or_404(Oggetto, id=oggetto_id)
+
+    # Associa l'oggetto alla scatola (assumendo ForeignKey da Oggetto a Scatola)
+    oggetto.scatola = scatola
+    oggetto.save()
+
+    return redirect('aggiungi_oggetto', scatola_id=scatola.id)
+
+
+def rimuovi_dalla_scatola(request, oggetto_id):
+    oggetto = get_object_or_404(Oggetto, id=oggetto_id)
+
+    # Salva l'ID della scatola corrente prima di rimuovere
+    scatola_id = oggetto.scatola.id if oggetto.scatola else None
+
+    # Rimuovi l'oggetto dalla scatola
+    oggetto.scatola = None
+    oggetto.save()
+
+    # Reindirizza solo se c'era una scatola
+    if scatola_id:
+        return redirect('oggettiInScatola', scatola_id=scatola_id)
+    else:
+        return redirect('home')  # o un'altra pagina a tua scelta
+

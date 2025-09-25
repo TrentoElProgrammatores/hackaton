@@ -60,7 +60,14 @@
                         <div class="card-body">
                             <h5 class="card-title">{{ item.titolo|default:"x" }}</h5>
                             <p class="card-text">{{ item.descrizione|default:"x" }}</p>
-                            <p class="mb-1"><strong>Dimensione:</strong> {{ item.dimensione|default:"x" }}</p>
+                            <p class="mb-1">
+                                <strong>Scatola:</strong>
+                                {% if item.scatola %}
+                                    {{ item.scatola.descrizione|default:"" }}
+                                {% else %}
+                                    Nessuna scatola
+                                {% endif %}
+                            </p>
                             <p class="mb-1"><strong>Location:</strong> {{ item.location.nome|default:"x" }}</p>
                             <a href="{% url 'prodotto' item.id %}" class="btn btn-primary w-100">Dettagli</a>
                         </div>

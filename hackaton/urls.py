@@ -39,5 +39,15 @@ urlpatterns = [
     path('api/aggetto/save', views.apiSaveItem),
     path('leMieScatole/', views.leMieScatole, name='leMieScatole'),
     path('scatola/<uuid:scatola_id>/', views.oggettiInScatola, name='oggettiInScatola'),
+       path('scatola/<uuid:scatola_id>/aggiungi-oggetto/',
+         views.aggiungi_oggetto_view,
+         name='aggiungi_oggetto'),
+
+    path('scatola/<uuid:scatola_id>/aggiungi-oggetto/<uuid:oggetto_id>/',
+         views.aggiungi_oggetto_scatola,
+         name='aggiungi_oggetto_scatola'),
+         path('oggetto/<uuid:oggetto_id>/rimuovi/', views.rimuovi_dalla_scatola, name='rimuovi_dalla_scatola')
+
+
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
