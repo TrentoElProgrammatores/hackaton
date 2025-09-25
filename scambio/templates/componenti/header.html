@@ -58,14 +58,16 @@
 
       <!-- Navbar (desktop) -->
       <nav class="d-none d-md-flex align-items-center gap-4">
-        <a href="#">Come Funziona</a>
+        <a href="http://127.0.0.1:8000/">Home</a>
         <a href="#">Oggetti</a>
         <a href="http://127.0.0.1:8000/aggiungi/scatola">Aggiungi scatola</a>
+        <a href="http://127.0.0.1:8000/aggiungi/location">Aggiungi location</a>
       </nav>
+
 
       <!-- Pulsanti -->
       <div class="d-flex align-items-center gap-2">
-        <button class="btn btn-outline-secondary btn-sm">Accedi</button>
+        <a href="{% url 'sedeLogin' %}" class="btn btn-outline-secondary btn-sm">Accedi</a>
         <button class="btn btn-primary btn-sm">Inizia a Scambiare</button>
       </div>
     </div>

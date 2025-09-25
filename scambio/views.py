@@ -59,3 +59,35 @@ def addScatola(request):
         form = UploadScatolaForm(user=request.user)
 
     return render(request, 'aggiungiScatola.html', {'form': form})
+
+def addLocation(request):
+    if request.method == 'POST':
+        form = UploadLocationForm(request.POST, request.FILES, user=request.user)
+        print(form.errors)
+        if form.is_valid():
+            form.save()  # salva la location e assegna automaticamente sede = user
+            return redirect('home')  # reindirizza dove vuoi
+    else:
+        form = UploadLocationForm(user=request.user)
+
+    return render(request, 'aggiungiLocation.html', {'form': form})
+
+
+def sedeLogin(request):
+    """
+    View per il login delle sedi usando il form SedeLoginForm
+    """
+    if request.method == 'POST':
+        form = SedeLoginForm(request, data=request.POST)
+        if form.is_valid():
+            # Recupera l'utente autenticato
+            user = form.get_user()
+            login(request, user)  # Logga l'utente nella sessione
+            return redirect('dashboard')  # Sostituisci con il nome della tua dashboard
+        else:
+            messages.error(request, "Username o password non corretti")
+    else:
+        form = SedeLoginForm()
+
+    return render(request, 'sedeLogin.html', {'form': form})
+

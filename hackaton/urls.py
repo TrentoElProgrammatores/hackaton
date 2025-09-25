@@ -27,4 +27,6 @@ urlpatterns = [
     path('aggiungi/item', views.addItem, name='addItem'),
     path('aggiungi/scatola', views.addScatola, name='addScatola'),
     path('prodotto/<str:id>', views.prodotto, name='prodotto'),
+    path('aggiungi/location', views.addLocation, name='addLocation'),
+    path('login/', views.sedeLogin, name="sedeLogin")
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

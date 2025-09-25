@@ -12,18 +12,12 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-installo l'app:
-
-```sh
-python manage.py startapp scambio
-```
-
 
 ## pagine create
 
--home
--dettaglio prodotti
--cronologia scambi/prodotti
--inserimento prodotto
--aggiungi noleggio
+- [ ] home
+- [ ] dettaglio prodotti
+- [ ] cronologia scambi/prodotti
+- [ ] inserimento prodotto
+- [ ] aggiungi noleggio
 

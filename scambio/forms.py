@@ -1,6 +1,7 @@
 # forms.py
 from django import forms
 from .models import Oggetto, Location, Scatola, Sede  # importa i modelli corretti
+from django.contrib.auth.forms import AuthenticationForm
 
 class UploadItemForm(forms.ModelForm):
     # Sovrascrivo i campi per poter controllare widget / required / choices in modo chiaro
@@ -153,7 +154,6 @@ class UploadScatolaForm(forms.ModelForm):
         model = Scatola
         fields = ('descrizione', 'location')
 
-#to do test
 class UploadLocationForm(forms.ModelForm):
     nome = forms.CharField(
         label="Nome",
@@ -180,5 +180,21 @@ class UploadLocationForm(forms.ModelForm):
     class Meta:
         model = Location
         fields = ('nome',)
+
+class SedeLoginForm(AuthenticationForm):
+    username = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Username'
+        })
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Password'
+        })
+    )
+
 
 
