@@ -1,7 +1,9 @@
+from pyexpat.errors import messages
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render,redirect
 from .forms import *
 from .models import *
+from django.contrib.auth import login
 
 # Create your views here.
 
@@ -84,7 +86,7 @@ def sedeLogin(request):
             # Recupera l'utente autenticato
             user = form.get_user()
             login(request, user)  # Logga l'utente nella sessione
-            return redirect('dashboard')  # Sostituisci con il nome della tua dashboard
+            return redirect('home')  # Sostituisci con il nome della tua dashboard
         else:
             messages.error(request, "Username o password non corretti")
     else:

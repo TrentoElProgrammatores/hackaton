@@ -64,10 +64,17 @@
         <a href="http://127.0.0.1:8000/aggiungi/location">Aggiungi location</a>
       </nav>
 
-
       <!-- Pulsanti -->
       <div class="d-flex align-items-center gap-2">
-        <a href="{% url 'sedeLogin' %}" class="btn btn-outline-secondary btn-sm">Accedi</a>
+        {% if request.user.is_authenticated %}
+          <!-- Mostra il nome dell'utente loggato -->
+          <span class="btn btn-outline-secondary btn-sm disabled">
+            {{ request.user.nome }}
+          </span>
+        {% else %}
+          <!-- Mostra Accedi se non loggato -->
+          <a href="{% url 'sedeLogin' %}" class="btn btn-outline-secondary btn-sm">Accedi</a>
+        {% endif %}
         <button class="btn btn-primary btn-sm">Inizia a Scambiare</button>
       </div>
     </div>
