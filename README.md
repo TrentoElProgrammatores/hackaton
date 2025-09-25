@@ -13,8 +13,14 @@ pip install -r requirements.txt
 ```
 
 
+
 ## pagine create
 
+- [x] home
+- [ ] dettaglio prodotti
+- [ ] cronologia scambi/prodotti
+- [ ] inserimento prodotto
+- [ ] aggiungi noleggio
 - [ ] home
 - [ ] dettaglio prodotti
 - [ ] cronologia scambi/prodotti

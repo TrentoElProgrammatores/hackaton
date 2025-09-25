@@ -116,7 +116,7 @@
       qrValue: "https://scambio-oggetti.it/product/1",
       history: [
         {% for scambio in scambi %}
-        { date: "{{scambio.createdAt}}", da: "{{scambio.da.sede.nome}}", location: "{{scambio.a.location.nome}}", a: "{{scambio.a.sede.nome}}" },
+        { date: "{{scambio.scambio.createdAt}}", da: "{{scambio.scambio.da.sede.nome}}", a: "{{scambio.scambio.a.sede.nome}}" ,daLocation: "{{scambio.scambio.da.nome}}",aLocation: "{{scambio.scambio.a.nome}}",},
         {% endfor %}
         
       ]
@@ -154,8 +154,8 @@
         <div class="history-dot"></div>
         <div>
           <div class="fw-medium">${entry.da} => ${entry.a}<span class="text-muted small">• ${entry.location}</span></div>
-          <div class="text-muted small">${entry.action}</div>
-          <div class="text-muted fst-italic small">${new Date(entry.date).toLocaleDateString('it-IT')}</div>
+          <div class="text-muted small">${entry.daLocation} => ${entry.aLocation}</div>
+          <div class="text-muted fst-italic small">${entry.date}</div>
         </div>
       `;
       historyContainer.appendChild(div);
