@@ -10,7 +10,8 @@ from django.contrib.auth import login, logout
 
 def home(request):
     #print(DocumentiCliente.objects.get(utente=request.user))
-    return render(request, 'home.html')
+    items=Oggetto.objects.all().exclude(location__sede=request.user)
+    return render(request, 'home.html',{"items":items})
 
 def addItem(request):
     if request.method == 'POST':
