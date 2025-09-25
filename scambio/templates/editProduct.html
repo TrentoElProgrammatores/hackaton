@@ -161,7 +161,6 @@
                         <p class="text-muted mb-0">Condividi un oggetto che vorresti scambiare con la community</p>
                     </div>
                     <div class="card-body">
-                        <form id="addProductForm" method="post" >
                             <!-- Immagine -->                            
                              <div class="mb-3">
                                 <div class="col-md-4" id="sedeSelect">
@@ -185,10 +184,9 @@
                             </div>
                             <!-- Submit -->
                             <div class="mt-4">
-                                <button type="submit" class="btn btn-primary w-100">Aggiungi Oggetto</button>
+                                <button onclick=sendForm() class="btn btn-primary w-100">Aggiungi Oggetto</button>
                             </div>
 
-                        </form>
                     </div>
                 </div>
             </div>
@@ -207,7 +205,7 @@
                 .then(data => {
                     
                     const locazioneSelect = document.getElementById('locazioneSelect');
-                    let options = '<label for="location" class="form-label">Location *</label><select class="form-select">';
+                    let options = '<label for="location" class="form-label">Location *</label><select class="form-select"> <option value="">seleziona location</option>';
                     data.forEach(location => {
                         options += `<option value="${location.id}">${location.nome}</option>`;
                     });
@@ -228,16 +226,53 @@
                 .then(data => {
                     
                     const locazioneSelect = document.getElementById('scatoleSelect');
-                    let options = '<label for="location" class="form-label">Scatola *</label><select class="form-select">';
+                    let options = '<label for="location" class="form-label">Scatola *</label><select class="form-select"> <option value="">seleziona scatola</option>';
                     data.forEach(location => {
                         options += `<option value="${location.id}">${location.descrizione}</option>`;
                     });
                     options += '</select>';
                     locazioneSelect.innerHTML = options;
+                    console.log(options)
                     locazioneSelect.hidden = false;
                 })
                 .catch(error => console.error('Error fetching locations:', error));
         });
+
+        function sendForm(){
+            console.log("cliccato");
+            const sedeId = document.getElementById('sedeSelect').querySelector('select').value;
+            const locationSelect = document.getElementById('locazioneSelect').querySelector('select');
+            const locationId = locationSelect ? locationSelect.value : '';
+            const scatolaSelect = document.getElementById('scatoleSelect').querySelector('select');
+            const scatolaId = scatolaSelect ? scatolaSelect.value : '';
+
+            const payload = {
+                id: "{{idprodotto}}",
+                sede: sedeId,
+                location: locationId,
+                scatola: scatolaId
+            };
+
+            fetch('/api/aggetto/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert('Oggetto aggiunto con successo!');
+                    // puoi fare un redirect o altro qui
+                } else {
+                    alert('Errore nell\'aggiunta dell\'oggetto.');
+                }
+            })
+            .catch(error => {
+                console.error('Errore:', error);
+                alert('Errore di rete.');
+            });
+        }
     </script>
 
 </body>

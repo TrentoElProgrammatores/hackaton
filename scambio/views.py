@@ -112,7 +112,7 @@ def sedeLogout(request):
 
 def editProduct(request,id):
     sedi=Sede.objects.all().exclude(id=request.user.id)
-    return render(request, 'editProduct.html',{'sedi':sedi})
+    return render(request, 'editProduct.html',{'sedi':sedi,'idprodotto':id})
 
 
 
@@ -166,3 +166,9 @@ def iMieiOggetti(request):
         'oggetti': oggetti,
     }
     return render(request, 'iMieiOggetti.html', context)
+
+def apiSaveItem(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        print(data)
+    return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
