@@ -27,3 +27,13 @@ pip install -r requirements.txt
 - [ ] inserimento prodotto
 - [ ] aggiungi noleggio
 
+## to-do
+
+- login per entrare nel gestionale
+- sistemare qrcode
+- aggiungere link alla scatola nella descrizione oggetto
+- sistemare front-end
+- metterlo online
+- stampare qr code
+- popolare database con dati sensati
+- check generale
