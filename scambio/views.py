@@ -47,7 +47,7 @@ def prodotto(request,id):
     categoria=OggettoCategoria.objects.filter(oggetto=item).first()
     data.update({'categoria':categoria})
     scambio=MerceScambiata.objects.filter(oggetto=item)
-    data.update({'scambi':scambio})
+    data.update({'scambi':scambio,'domain':settings.DOMINIO})
     print("scambio",scambio)
     return render(request, 'prodotto.html',data)
 

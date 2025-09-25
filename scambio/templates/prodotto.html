@@ -113,7 +113,7 @@
       ownerName: "{{item.proprietario.nome}}",
       group: "{{categoria.categoria.nome}}",
       size: "{{item.dimensione}}",
-      qrValue: "https://scambio-oggetti.it/product/1",
+      qrValue: "{{domain}}{% url 'prodotto' item.id%}",
       history: [
         {% for scambio in scambi %}
         { date: "{{scambio.scambio.createdAt}}", da: "{{scambio.scambio.da.sede.nome}}", a: "{{scambio.scambio.a.sede.nome}}" ,daLocation: "{{scambio.scambio.da.nome}}",aLocation: "{{scambio.scambio.a.nome}}",},

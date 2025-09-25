@@ -145,5 +145,5 @@ DEFAULT_FROM_EMAIL = 'noreply@tuosito.com'
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
-DOMINIO = "localhost:8000"
+DOMINIO = "http://localhost:8000"
 
