@@ -139,7 +139,6 @@ class UploadScatolaForm(forms.ModelForm):
         # Popolamento dinamico del campo location
         if self.user is not None:
             try:
-                print("User", Oggetto.objects.filter(location__sede=self.user))
                 self.fields['location'].queryset = Location.objects.filter(sede=self.user)
                 self.fields['items'].queryset = Oggetto.objects.filter(location__sede=self.user)
             except Exception:
