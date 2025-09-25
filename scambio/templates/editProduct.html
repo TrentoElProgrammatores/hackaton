@@ -237,6 +237,21 @@
                 })
                 .catch(error => console.error('Error fetching locations:', error));
         });
+        function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let cookie of cookies) {
+            cookie = cookie.trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getCookie('csrftoken');
 
         function sendForm(){
             console.log("cliccato");
@@ -253,25 +268,21 @@
                 scatola: scatolaId
             };
 
-            fetch('/api/aggetto/save', {
-                method: 'POST',
+            fetch("/api/aggetto/save", {
+                method: "POST",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken,   // 🔑 token CSRF richiesto da Django
                 },
-                body: JSON.stringify(payload)
+                body: JSON.stringify(payload),
             })
             .then(response => {
-                if (response.ok) {
-                    alert('Oggetto aggiunto con successo!');
-                    // puoi fare un redirect o altro qui
-                } else {
-                    alert('Errore nell\'aggiunta dell\'oggetto.');
-                }
+                if (!response.ok) throw new Error("Errore nella richiesta");
+                window.location.href = "{% url 'prodotto' idprodotto %}";
+                return response.json();
             })
-            .catch(error => {
-                console.error('Errore:', error);
-                alert('Errore di rete.');
-            });
+            .then(data => console.log("Risposta dal server:", data))
+            .catch(error => console.error(error));
         }
     </script>
 

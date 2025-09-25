@@ -8,6 +8,7 @@ from django.contrib.auth import login, logout
 from django.conf import settings
 import json
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -113,7 +114,7 @@ def sedeLogout(request):
 
 
 def editProduct(request,id):
-    sedi=Sede.objects.all().exclude(id=request.user.id)
+    sedi=Sede.objects.all()
     return render(request, 'editProduct.html',{'sedi':sedi,'idprodotto':id})
 
 
@@ -169,10 +170,17 @@ def iMieiOggetti(request):
     }
     return render(request, 'iMieiOggetti.html', context)
 
+@csrf_exempt  
 def apiSaveItem(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         print(data)
+        item=Oggetto.objects.get(id=data['id'])
+        item.scatola=Scatola.objects.get(id=data['scatola'])
+        item.location=Location.objects.get(id=data['location'])
+        item.save()
+        return JsonResponse({'success': True}, status=200)
+
     return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
 
 
