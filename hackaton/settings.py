@@ -129,3 +129,21 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Stampa email in console (non invia email reali)
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@tuosito.com'
+
+#invio reale delle mail
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_USE_TLS = True
+# EMAIL_HOST_USER = 'tua_email@gmail.com'        # email del mittente
+# EMAIL_HOST_PASSWORD = 'password_app'          # password app di Gmail
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+DOMINIO = "localhost:8000"
+

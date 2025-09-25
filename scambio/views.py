@@ -1,10 +1,11 @@
 from pyexpat.errors import messages
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render,redirect
+from django.core.mail import send_mail
 from .forms import *
 from .models import *
 from django.contrib.auth import login, logout
-
+from django.conf import settings
 # Create your views here.
 
 
@@ -110,3 +111,25 @@ def editProduct(request,id):
 
 
     return render(request, 'editProduct.html')
+
+def confermaPrenotazione(request, item_id):
+    item = get_object_or_404(Oggetto, id=item_id)
+    utente_loggato = request.user
+
+    # invia email al proprietario
+    if item.proprietario.email:
+        send_mail(
+            subject=f"Nuova prenotazione richiesta per {item.titolo}",
+            message=(
+                f"Ciao {item.proprietario.nome},\n\n"
+                f"L'utente {utente_loggato.nome or utente_loggato.username} "
+                f"ha richiesto la prenotazione del tuo oggetto '{item.titolo}'.\n\n"
+                f"{settings.DOMINIO}/item/edit/{item.id}"
+            ),
+            from_email=settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[item.proprietario.email],
+            fail_silently=False,
+        )
+
+    # Mostra la pagina di conferma
+    return render(request, "confermaPrenotazione.html", {"item": item})

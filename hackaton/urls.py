@@ -31,4 +31,5 @@ urlpatterns = [
     path('item/edit/<str:id>', views.editProduct, name='editProduct'),
     path('login/', views.sedeLogin, name="sedeLogin"),
     path('logout/', views.sedeLogout, name='sedeLogout'),
+    path("confermaPrenotazione/<uuid:item_id>/", views.confermaPrenotazione, name="confermaPrenotazione")
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
