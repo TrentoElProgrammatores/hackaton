@@ -29,6 +29,7 @@ pip install -r requirements.txt
 
 ## to-do
 
+- aggiungere test mail
 - login per entrare nel gestionale
 - sistemare qrcode
 - aggiungere link alla scatola nella descrizione oggetto
