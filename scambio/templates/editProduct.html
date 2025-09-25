@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modifica Oggetto</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-background to-accent/20">
+
+  <!-- Header -->
+  <div class="bg-white/80 backdrop-blur-sm border-b sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-6 py-4">
+      <a href="product.html" class="inline-flex items-center text-sm px-3 py-1.5 rounded-md hover:bg-gray-100">
+        ← Torna al prodotto
+      </a>
+    </div>
+  </div>
+
+  <div class="max-w-2xl mx-auto px-6 py-8">
+    <div class="bg-white border rounded-lg shadow p-6">
+      <div class="text-center mb-6">
+        <h1 class="text-3xl font-bold">Modifica Oggetto</h1>
+        <p class="text-gray-500">Aggiorna le informazioni del tuo oggetto</p>
+      </div>
+
+      <form class="space-y-6">
+        <!-- Titolo -->
+        <div class="space-y-2">
+          <label for="title" class="block font-medium">Titolo *</label>
+          <input 
+            type="text" 
+            id="title" 
+            placeholder="Es. Chitarra acustica vintage" 
+            class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-primary" 
+            required
+          />
+        </div>
+
+        <!-- Descrizione -->
+        <div class="space-y-2">
+          <label for="description" class="block font-medium">Descrizione *</label>
+          <textarea 
+            id="description" 
+            placeholder="Descrivi l'oggetto, le sue condizioni e cosa vorresti in cambio..."
+            class="w-full border rounded-md px-3 py-2 min-h-[100px] focus:outline-none focus:ring focus:ring-primary"
+            required
+          ></textarea>
+        </div>
+
+        <!-- Immagine -->
+        <div class="space-y-2">
+          <label for="image" class="block font-medium">Nuova Immagine (opzionale)</label>
+          <input 
+            id="image" 
+            type="file" 
+            accept="image/*"
+            class="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 
+                   file:text-sm file:font-semibold file:bg-indigo-600 file:text-white hover:file:bg-indigo-500"
+          />
+        </div>
+
+        <!-- Select -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div class="space-y-2">
+            <label for="location" class="block font-medium">Città *</label>
+            <select id="location" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-primary" required>
+              <option value="">Seleziona città</option>
+              <option>Milano</option>
+              <option>Roma</option>
+              <option>Napoli</option>
+              <option>Torino</option>
+              <option>Palermo</option>
+              <option>Genova</option>
+              <option>Bologna</option>
+              <option>Firenze</option>
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <label for="group" class="block font-medium">Categoria *</label>
+            <select id="group" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-primary" required>
+              <option value="">Seleziona categoria</option>
+              <option>Elettronica</option>
+              <option>Abbigliamento</option>
+              <option>Casa e Giardino</option>
+              <option>Sport e Tempo Libero</option>
+              <option>Libri e Riviste</option>
+              <option>Giocattoli</option>
+              <option>Musica</option>
+              <option>Arte e Collezionismo</option>
+            </select>
+          </div>
+
+          <div class="space-y-2">
+            <label for="size" class="block font-medium">Dimensione *</label>
+            <select id="size" class="w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-primary" required>
+              <option value="">Seleziona dimensione</option>
+              <option>Piccolo</option>
+              <option>Medio</option>
+              <option>Grande</option>
+              <option>Extra Large</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Bottoni -->
+        <div class="flex gap-4">
+          <a href="product.html" class="flex-1 inline-flex items-center justify-center border rounded-md px-4 py-2 hover:bg-gray-100">
+            Annulla
+          </a>
+          <button type="submit" class="flex-1 bg-indigo-600 text-white rounded-md px-4 py-2 hover:bg-indigo-500">
+            Salva Modifiche
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

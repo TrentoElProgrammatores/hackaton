@@ -102,3 +102,8 @@ def sedeLogout(request):
     logout(request)  # termina la sessione dell'utente
     return redirect('sedeLogin')  # reindirizza alla pagina di login
 
+
+def sedeLogin(request,id):
+    
+    
+    return render(request, 'editProduct.html')
