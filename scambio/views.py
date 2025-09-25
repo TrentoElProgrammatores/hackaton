@@ -10,8 +10,11 @@ from django.contrib.auth import login, logout
 
 def home(request):
     #print(DocumentiCliente.objects.get(utente=request.user))
-    items=Oggetto.objects.all().exclude(location__sede=request.user)
-    return render(request, 'home.html',{"items":items})
+    if request.user.is_authenticated:
+        items=Oggetto.objects.all().exclude(location__sede=request.user)
+        return render(request, 'home.html',{"items":items})
+    else:
+        return render(request, 'home.html',{"items":[]})
 
 def addItem(request):
     if request.method == 'POST':
@@ -104,6 +107,6 @@ def sedeLogout(request):
 
 
 def editProduct(request,id):
-    
-    
+
+
     return render(request, 'editProduct.html')
