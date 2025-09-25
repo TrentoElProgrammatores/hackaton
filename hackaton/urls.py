@@ -28,5 +28,6 @@ urlpatterns = [
     path('aggiungi/scatola', views.addScatola, name='addScatola'),
     path('prodotto/<str:id>', views.prodotto, name='prodotto'),
     path('aggiungi/location', views.addLocation, name='addLocation'),
-    path('login/', views.sedeLogin, name="sedeLogin")
+    path('login/', views.sedeLogin, name="sedeLogin"),
+    path('logout/', views.sedeLogout, name='sedeLogout'),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

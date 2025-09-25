@@ -66,17 +66,18 @@
 
       <!-- Pulsanti -->
       <div class="d-flex align-items-center gap-2">
-        {% if request.user.is_authenticated %}
-          <!-- Mostra il nome dell'utente loggato -->
-          <span class="btn btn-outline-secondary btn-sm disabled">
+    {% if request.user.is_authenticated %}
+        <!-- Mostra il nome dell'utente loggato e logout -->
+        <span class="btn btn-outline-secondary btn-sm disabled">
             {{ request.user.nome }}
-          </span>
-        {% else %}
-          <!-- Mostra Accedi se non loggato -->
-          <a href="{% url 'sedeLogin' %}" class="btn btn-outline-secondary btn-sm">Accedi</a>
-        {% endif %}
-        <button class="btn btn-primary btn-sm">Inizia a Scambiare</button>
-      </div>
+        </span>
+        <a href="{% url 'sedeLogout' %}" class="btn btn-outline-danger btn-sm">Logout</a>
+    {% elif request.path != '/login/' %}
+        <!-- Mostra Accedi solo se non sei sulla pagina di login -->
+        <a href="{% url 'sedeLogin' %}" class="btn btn-outline-secondary btn-sm">Accedi</a>
+    {% endif %}
+    <button class="btn btn-primary btn-sm">Inizia a Scambiare</button>
+</div>
     </div>
   </header>
 

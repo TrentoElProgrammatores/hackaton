@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render,redirect
 from .forms import *
 from .models import *
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 
 # Create your views here.
 
@@ -93,4 +93,11 @@ def sedeLogin(request):
         form = SedeLoginForm()
 
     return render(request, 'sedeLogin.html', {'form': form})
+
+def sedeLogout(request):
+    """
+    View per fare il logout dell'utente.
+    """
+    logout(request)  # termina la sessione dell'utente
+    return redirect('sedeLogin')  # reindirizza alla pagina di login
 
