@@ -103,7 +103,7 @@ def sedeLogout(request):
     return redirect('sedeLogin')  # reindirizza alla pagina di login
 
 
-def sedeLogin(request,id):
+def editProduct(request,id):
     
     
     return render(request, 'editProduct.html')
