@@ -35,7 +35,7 @@ class Location(models.Model):
 class Scatola(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     descrizione = models.TextField()
-
+    createdAt=models.DateTimeField(default=timezone.now, null=True, blank=True)
     # WARN: La location della scatola ha la priorità
     location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True, blank=True)
 

@@ -53,23 +53,25 @@ def prodotto(request,id):
 def addScatola(request):
     if request.method == 'POST':
         form = UploadScatolaForm(request.POST, request.FILES, user=request.user)
-        print(form.errors)
         if form.is_valid():
+            # Salva la scatola
             scatola = form.save(commit=False)
-
-            # Se il modello Scatola ha un campo owner e non lo gestisci già nel form.save()
-            # scatola.owner = request.user
-
             scatola.save()
-            form.save_m2m()  # serve solo se hai campi ManyToMany (puoi anche toglierlo se non ne hai)
 
-            # 🔁 Dopo il salvataggio puoi reindirizzare dove preferisci:
-            return redirect('home')  # oppure 'lista_scatole', 'dashboard', ecc.
+            # Recupera gli oggetti selezionati e assegna la scatola
+            oggetti_selezionati = form.cleaned_data.get('oggetti')
+            if oggetti_selezionati:
+                for oggetto in oggetti_selezionati:
+                    oggetto.scatola = scatola
+                    oggetto.save()
 
+            # Reindirizza alla lista delle scatole
+            return redirect('leMieScatole')
     else:
         form = UploadScatolaForm(user=request.user)
 
     return render(request, 'aggiungiScatola.html', {'form': form})
+
 
 def addLocation(request):
     if request.method == 'POST':
@@ -172,3 +174,27 @@ def apiSaveItem(request):
         data = json.loads(request.body)
         print(data)
     return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
+
+
+def leMieScatole(request):
+    scatole = Scatola.objects.filter(location__sede=request.user).order_by("-createdAt")
+    return render(request, "leMieScatole.html", {"scatole": scatole})
+
+
+# views.py
+def oggettiInScatola(request, scatola_id):
+    # prendi la scatola dell'utente loggato
+    scatola = Scatola.objects.get(id=scatola_id)#get_object_or_404(Scatola, id=scatola_id, location__sede=request.user)
+
+    # prendi tutti gli oggetti collegati a questa scatola
+    oggetti = Oggetto.objects.filter(scatola=scatola) # relazione inversa FK
+
+    return render(request, "oggettiInScatola.html", {"scatola": scatola, "oggetti": oggetti})
+
+
+
+
+# def oggettiInScatola(request, scatola_id):
+#     scatola = get_object_or_404(Scatola, id=scatola_id, location__sede=request.user)
+#     oggetti = Oggetto.objects.filter(scatola=scatola)
+#     return render(request, "oggettiInScatola.html", {"scatola": scatola, "oggetti": oggetti})

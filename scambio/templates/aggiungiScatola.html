@@ -35,7 +35,7 @@
                             <div class="mb-3">
                                 <label for="descrizione" class="form-label">Descrizione</label>
                                 <textarea name="descrizione" class="form-control" id="descrizione" rows="4"
-                                    placeholder="Inserisci una descrizione (opzionale)">{{ form.descrizione.value }}</textarea>
+                                    placeholder="Inserisci una descrizione (opzionale)"></textarea>
                                 {% if form.descrizione.errors %}
                                     <div class="text-danger small">{{ form.descrizione.errors }}</div>
                                 {% endif %}
@@ -47,15 +47,6 @@
                                 {{ form.location }}
                                 {% if form.location.errors %}
                                     <div class="text-danger small">{{ form.location.errors }}</div>
-                                {% endif %}
-                            </div>
-                            
-                            <!-- Location -->
-                            <div class="mb-3">
-                                <label for="location" class="form-label">items *</label>
-                                {{ form.items }}
-                                {% if form.items.errors %}
-                                    <div class="text-danger small">{{ form.items.errors }}</div>
                                 {% endif %}
                             </div>
 

@@ -94,21 +94,14 @@ class UploadItemForm(forms.ModelForm):
         fields = ('titolo', 'descrizione', 'location', 'scatola', 'dimensione', 'immagine')
 
 
-class UploadScatolaForm(forms.ModelForm):
-    """
-    Form per creare o modificare una Scatola.
-    - Passa `user=request.user` quando instanzi il form dalla view.
-    - Il campo `location` viene popolato dinamicamente in __init__ filtrando in base all'utente.
-    - Il campo `owner` non è esposto nel form (se esiste nel modello, lo impostiamo automaticamente nel save()).
-    """
 
+class UploadScatolaForm(forms.ModelForm):
     descrizione = forms.CharField(
         label='Descrizione',
         required=False,
         widget=forms.Textarea(attrs={
             'placeholder': 'Descrizione (opzionale)',
-            'class': 'input pl-10 form-control',
-            'id': 'descrizione',
+            'class': 'form-control',
             'rows': 4,
         })
     )
@@ -116,53 +109,21 @@ class UploadScatolaForm(forms.ModelForm):
     location = forms.ModelChoiceField(
         queryset=Location.objects.none(),
         empty_label='Seleziona una location',
-        widget=forms.Select(attrs={
-            'class': 'w-full border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200 form-select',
-            'required': True,
-            'id': 'location'
-        })
+        widget=forms.Select(attrs={'class': 'form-select'})
     )
-
-    items = forms.ModelChoiceField(
-        queryset=Location.objects.all(),
-        empty_label='Seleziona una location',
-        widget=forms.Select(attrs={
-            'class': 'form-select',
-            'required': True,
-        })
-    )
-
-    def __init__(self, *args, **kwargs):
-        # recupera lo user passato dalla view
-        self.user = kwargs.pop('user', None)
-        super().__init__(*args, **kwargs)
-        # Popolamento dinamico del campo location
-        if self.user is not None:
-            try:
-                self.fields['location'].queryset = Location.objects.filter(sede=self.user)
-                self.fields['items'].queryset = Oggetto.objects.filter(location__sede=self.user)
-            except Exception:
-                self.fields['location'].queryset = Location.objects.all()
-                self.fields['items'].queryset = Oggetto.objects.none()
-        else:
-            self.fields['location'].queryset = Location.objects.none()
-
-    def save(self, commit=True):
-        """
-        Imposta automaticamente owner = user se presente (se il modello lo supporta).
-        """
-        instance = super().save(commit=False)
-        if getattr(self, 'user', None):
-            if hasattr(instance, 'owner'):
-                instance.owner = self.user
-
-        if commit:
-            instance.save()
-        return instance
 
     class Meta:
         model = Scatola
-        fields = ('descrizione', 'location','items')
+        fields = ['descrizione', 'location']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if user:
+            # Filtra le location disponibili per l'utente
+            user_locations = Location.objects.filter(sede=user)
+            self.fields['location'].queryset = user_locations
+
 
 class UploadLocationForm(forms.ModelForm):
     nome = forms.CharField(

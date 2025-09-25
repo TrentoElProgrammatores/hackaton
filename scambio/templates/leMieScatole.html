@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le mie scatole - ScambiaOggetti</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body { background-color: #f8f9fa; min-height: 100vh; }
+    .objects-section { padding: 4rem 1rem; }
+    .card-object {
+      border: none;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s;
+    }
+    .card-object:hover { transform: translateY(-5px); }
+    .card-object img { object-fit: cover; height: 200px; }
+    .card-body h5 { font-weight: 600; }
+  </style>
+</head>
+
+<body>
+  <nav>
+    {% include "componenti/header.html" %}
+  </nav>
+
+  <section class="objects-section">
+    <div class="container">
+      <h1 class="mb-5 text-center">Le mie scatole</h1>
+
+      {% if scatole %}
+      <div class="row g-4">
+        {% for scatola in scatole %}
+        <div class="col-md-4">
+          <div class="card card-object shadow-sm">
+            <img src="{{ scatola.immagine.url|default:'/static/img/placeholder.png' }}" class="card-img-top" alt="{{ scatola.nome }}">
+            <div class="card-body">
+              <h5 class="card-title">{{ scatola.descrizione|default:"Scatola senza nome" }}</h5>
+              <p class="mb-1"><strong>Location:</strong> {{ scatola.location.nome|default:"x" }}</p>
+              <a href="{% url 'oggettiInScatola' scatola.id %}" class="btn btn-primary w-100">Visualizza oggetti</a>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      {% else %}
+      <p class="text-center">Non hai ancora scatole registrate.</p>
+      {% endif %}
+    </div>
+  </section>
+
+</body>
+</html>
