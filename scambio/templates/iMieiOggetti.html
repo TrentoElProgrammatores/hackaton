@@ -63,7 +63,7 @@
                             <p class="mb-1">
                                 <strong>Scatola:</strong>
                                 {% if item.scatola %}
-                                    {{ item.scatola.descrizione|default:"" }}
+                                    <a href="{% url 'oggettiInScatola' item.scatola.id %}">{{ item.scatola.descrizione|default:"" }}</a>
                                 {% else %}
                                     Nessuna scatola
                                 {% endif %}
