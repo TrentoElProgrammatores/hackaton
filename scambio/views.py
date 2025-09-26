@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render,redirect
 from django.core.mail import send_mail
@@ -349,3 +350,12 @@ def verifica_recupero(request,id):
     sede.save()
     print("GODO")
     return render(request, 'verifica_recupero.html',{'validate':True})'''
+
+
+def elimina_oggetto(request, pk):
+    if request.method == "POST":
+        oggetto = get_object_or_404(Oggetto, pk=pk, proprietario=request.user)
+        oggetto.delete()
+        messages.success(request, "Oggetto eliminato con successo!")
+        return redirect("iMieiOggetti")  # oppure la pagina che vuoi dopo l'eliminazione
+    return redirect("prodotto", pk=pk)

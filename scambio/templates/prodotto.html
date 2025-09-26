@@ -39,10 +39,9 @@
 </head>
 <body>
 
-    <nav>
-        {% include "componenti/header.html" %}
-    </nav>
-
+  <nav>
+    {% include "componenti/header.html" %}
+  </nav>
 
   <main class="container py-5">
 
@@ -51,26 +50,34 @@
       <div class="col-lg-6">
         <div class="card mb-4">
           <div class="position-relative">
-            <img src="{{item.immagine.url}}" id="product-image" class="card-img-top" alt="Prodotto">
+            <img src="{{ item.immagine.url }}" id="product-image" class="card-img-top" alt="Prodotto">
             <span class="badge badge-primary position-absolute top-0 start-0 m-3" id="product-category">
-              Musica
+              {{ categoria.categoria.nome }}
             </span>
           </div>
         </div>
 
         <div class="card">
           <div class="card-body">
-            <h2 class="card-title" id="product-title">Chitarra Acustica Vintage</h2>
+            <h2 class="card-title" id="product-title">{{ item.titolo }}</h2>
             <div class="text-muted small mb-2">
-              📍 <span id="product-location">Milano</span> • 👤 <span id="product-owner">Marco Rossi</span>
+              📍 <span id="product-location">{{ item.location.nome }}</span> • 👤 <span id="product-owner">{{ item.proprietario.nome }}</span>
             </div>
+
             <p class="card-text" id="product-description">
-              Una bellissima chitarra acustica in ottime condizioni. Perfetta per chi vuole iniziare a suonare o per musicisti esperti.
+              {{ item.descrizione }}
             </p>
-            <div class="d-flex gap-2">
-              <span class="badge bg-light text-dark border" id="product-group">Strumenti</span>
-              <span class="badge bg-light text-dark border" id="product-size">Grande</span>
+
+            <div class="d-flex gap-2 mb-3">
+              <span class="badge bg-light text-dark border" id="product-group">{{ categoria.categoria.nome }}</span>
+              <span class="badge bg-light text-dark border" id="product-size">{{ item.dimensione }}</span>
             </div>
+
+            <!-- 🔥 Pulsante elimina oggetto -->
+            <form method="post" action="{% url 'elimina_oggetto' item.id %}" onsubmit="return confirm('Sei sicuro di voler eliminare questo oggetto? Questa azione è irreversibile.');">
+              {% csrf_token %}
+              <button type="submit" class="btn btn-danger w-100 mt-3">🗑️ Elimina oggetto</button>
+            </form>
           </div>
         </div>
       </div>
@@ -102,65 +109,70 @@
 
   </main>
 
-  <script>
-    // Mock product data
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Dati prodotto per QR e cronologia
     const product = {
-      title: "{{item.titolo}}",
-      description: "{{item.descrizione}}",
-      imageUrl: "{{item.immagine.url}}",
-      category: "{{categoria.categoria.nome}}",
-      location: "{{item.location.nome}}",
-      ownerName: "{{item.proprietario.nome}}",
-      group: "{{categoria.categoria.nome}}",
-      size: "{{item.dimensione}}",
-      qrValue: "{{domain}}{% url 'prodotto' item.id%}",
+      title: "{{ item.titolo }}",
+      description: "{{ item.descrizione }}",
+      imageUrl: "{{ item.immagine.url }}",
+      category: "{{ categoria.categoria.nome }}",
+      location: "{{ item.location.nome }}",
+      ownerName: "{{ item.proprietario.nome }}",
+      group: "{{ categoria.categoria.nome }}",
+      size: "{{ item.dimensione }}",
+      qrValue: "{{ domain }}{% url 'prodotto' item.id %}",
       history: [
         {% for scambio in scambi %}
-        { date: "{{scambio.scambio.createdAt}}", da: "{{scambio.scambio.da.sede.nome}}", a: "{{scambio.scambio.a.sede.nome}}" ,daLocation: "{{scambio.scambio.da.nome}}",aLocation: "{{scambio.scambio.a.nome}}",},
+        {
+          date: "{{ scambio.scambio.createdAt }}",
+          da: "{{ scambio.scambio.da.sede.nome }}",
+          a: "{{ scambio.scambio.a.sede.nome }}",
+          daLocation: "{{ scambio.scambio.da.nome }}",
+          aLocation: "{{ scambio.scambio.a.nome }}"
+        },
         {% endfor %}
-      ],
-      scatola: "{{item.scatola.nome}}"
+      ]
     };
 
-    // Popola i dati nel DOM
-    document.getElementById("product-title").textContent = product.title;
-    document.getElementById("product-description").textContent = product.description;
-    document.getElementById("product-image").src = product.imageUrl;
-    document.getElementById("product-category").textContent = product.category;
-    document.getElementById("product-location").textContent = product.location;
-    document.getElementById("product-owner").textContent = product.ownerName;
-    document.getElementById("product-group").textContent = product.group;
-    document.getElementById("product-size").textContent = product.size;
+    // ✅ Genera QR code SOLO quando il canvas esiste
+    const qrCanvas = document.getElementById('qr-code');
+    if (qrCanvas && product.qrValue) {
+      QRCode.toCanvas(qrCanvas, product.qrValue, { width: 200 }, function (error) {
+        if (error) console.error("Errore QR:", error);
+      });
+    } else {
+      console.error("QR non generato: canvas o valore non trovato.");
+    }
 
-    // Genera QR code
-    QRCode.toCanvas(document.getElementById('qr-code'), product.qrValue, { width: 200 });
+    // ✅ Scarica QR code
+    const downloadBtn = document.getElementById("downloadQR");
+    if (downloadBtn) {
+      downloadBtn.addEventListener("click", () => {
+        const pngFile = qrCanvas.toDataURL("image/png");
+        const downloadLink = document.createElement("a");
+        downloadLink.download = `qr-${product.title.replace(/\s+/g, '-').toLowerCase()}.png`;
+        downloadLink.href = pngFile;
+        downloadLink.click();
+      });
+    }
 
-    // Scarica QR code
-    document.getElementById("downloadQR").addEventListener("click", () => {
-      const canvas = document.getElementById("qr-code");
-      const pngFile = canvas.toDataURL("image/png");
-      const downloadLink = document.createElement("a");
-      downloadLink.download = `qr-${product.title.replace(/\s+/g, '-').toLowerCase()}.png`;
-      downloadLink.href = pngFile;
-      downloadLink.click();
-    });
-
-    // Cronologia
+    // ✅ Cronologia scambi
     const historyContainer = document.getElementById("history-list");
-    product.history.forEach(entry => {
-      const div = document.createElement("div");
-      div.className = "d-flex gap-3 mb-3 history-entry";
-      div.innerHTML = `
-        <div class="history-dot"></div>
-        <div>
-          <div class="fw-medium">${entry.da} => ${entry.a}<span class="text-muted small">• ${entry.location}</span></div>
-          <div class="text-muted small">${entry.daLocation} => ${entry.aLocation}</div>
-          <div class="text-muted fst-italic small">${entry.date}</div>
-        </div>
-      `;
-      historyContainer.appendChild(div);
-    });
-  </script>
-
-</body>
-</html>
+    if (historyContainer && product.history) {
+      product.history.forEach(entry => {
+        const div = document.createElement("div");
+        div.className = "d-flex gap-3 mb-3 history-entry";
+        div.innerHTML = `
+          <div class="history-dot"></div>
+          <div>
+            <div class="fw-medium">${entry.da} => ${entry.a}</div>
+            <div class="text-muted small">${entry.daLocation} → ${entry.aLocation}</div>
+            <div class="text-muted fst-italic small">${entry.date}</div>
+          </div>
+        `;
+        historyContainer.appendChild(div);
+      });
+    }
+  });
+</script>

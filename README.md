@@ -39,7 +39,6 @@ pip install -r requirements.txt
 - [ ] stampare qr code
 - [ ] popolare database con dati sensati
 - [ ] check generale
-- filtra gli oggetti per categoria
 - aggiungi la possibilità di modificare i tuoi oggetti/scatole/location, eliminarli
 
 ## feature del gestionale
@@ -54,4 +53,4 @@ pip install -r requirements.txt
 - possibilità di muovere oggetti fra sedi (prestandoli)
 - cronologia dei prestiti (sede che possiede l'oggetto, sede in cui si trova l'oggetto, data di prestito)
 - possibilità di filtrare le scatole per location e cercarle per nome
-##possibilità di cercare gli oggetti per nome
+- possibilità di cercare gli oggetti per nome
