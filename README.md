@@ -64,9 +64,13 @@ soluzioni e features del nostro gestionale:
 - scatole salvate e visualizzabili che contengono oggetti con descrizione
 - location in cui sono depositate le scatole
 - possibilità di muovere oggetti fra scatole
-- possibilità di aggiungere,modificare o eliminare oggetti, scatole e location
+- possibilità di aggiungere o eliminare oggetti, scatole e location
 - possibilità di scannerizzare tramite QR code gli oggetti o le scatole per avere un immediato resoconto delle caratteristiche
 - possibilità di muovere oggetti fra sedi (prestandoli)
 - cronologia dei prestiti (sede che possiede l'oggetto, sede in cui si trova l'oggetto, data di prestito)
 - possibilità di filtrare le scatole per location e cercarle per nome
 - possibilità di cercare gli oggetti per nome
+
+
+presentazione online https://www.canva.com/design/DAG0FLCYaME/02NOu2HPJiI1sDkfgu7x3A/edit?utm_content=DAG0FLCYaME&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+
