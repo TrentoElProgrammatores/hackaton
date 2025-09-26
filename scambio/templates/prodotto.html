@@ -124,6 +124,7 @@
       qrValue: "{{ domain }}{% url 'prodotto' item.id %}",
       history: [
         {% for scambio in scambi %}
+          {% if scambio.scambio.da.sede.nome != scambio.scambio.a.sede.nome %}
         {
           date: "{{ scambio.scambio.createdAt }}",
           da: "{{ scambio.scambio.da.sede.nome }}",
@@ -131,6 +132,7 @@
           daLocation: "{{ scambio.scambio.da.nome }}",
           aLocation: "{{ scambio.scambio.a.nome }}"
         },
+          {% endif %}
         {% endfor %}
       ]
     };

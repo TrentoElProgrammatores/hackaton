@@ -44,9 +44,9 @@ class UploadItemForm(forms.ModelForm):
     )
 
     DIM_CHOICES = [
-        ('piccolo', 'Piccolo'),
-        ('medio', 'Medio'),
-        ('grande', 'Grande'),
+        ('piccolo', 'piccolo'),
+        ('medio', 'medio'),
+        ('grande', 'grande'),
     ]
     dimensione = forms.ChoiceField(
         choices=DIM_CHOICES,
