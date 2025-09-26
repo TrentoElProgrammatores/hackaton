@@ -48,7 +48,26 @@
 
     <section class="objects-section">
         <div class="container">
-            <h1 class="mb-5 text-center">I miei oggetti</h1>
+            <h1 class="mb-4 text-center">I miei oggetti</h1>
+
+            <!-- 🔍 Barra di ricerca per titolo -->
+            <form method="get" class="mb-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <input
+                            type="text"
+                            name="q"
+                            class="form-control"
+                            placeholder="Cerca per titolo..."
+                            value="{{ search_query|default:'' }}"
+                        >
+                    </div>
+                    <div class="col-md-2 mt-2 mt-md-0">
+                        <button type="submit" class="btn btn-primary w-100">Cerca</button>
+                    </div>
+                </div>
+            </form>
+            <!-- 🔍 Fine barra di ricerca -->
 
             {% if oggetti %}
             <div class="row g-4">

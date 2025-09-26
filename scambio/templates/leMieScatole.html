@@ -30,13 +30,14 @@
     <div class="container">
       <h1 class="mb-4 text-center">Le mie scatole</h1>
 
-      <!-- 🔎 FILTRO PER LOCATION -->
+      <!-- 🔎 FILTRO PER LOCATION + RICERCA PER NOME -->
       <form method="get" class="mb-5">
-        <div class="row justify-content-center">
-          <div class="col-md-6">
+        <div class="row justify-content-center align-items-center g-2">
+          <!-- Filtro location -->
+          <div class="col-md-4">
             <div class="input-group">
-              <label class="input-group-text" for="location">Filtra per location</label>
-              <select name="location" id="location" class="form-select" onchange="this.form.submit()">
+              <label class="input-group-text" for="location">Location</label>
+              <select name="location" id="location" class="form-select">
                 <option value="">Tutte le location</option>
                 {% for location in locations %}
                   <option value="{{ location.id }}" {% if selected_location == location.id|stringformat:"s" %}selected{% endif %}>
@@ -45,6 +46,22 @@
                 {% endfor %}
               </select>
             </div>
+          </div>
+
+          <!-- Barra di ricerca -->
+          <div class="col-md-4">
+            <input
+              type="text"
+              name="q"
+              class="form-control"
+              placeholder="Cerca per nome o descrizione..."
+              value="{{ search_query|default:'' }}"
+            >
+          </div>
+
+          <!-- Pulsante Filtra -->
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-primary w-100">Filtra</button>
           </div>
         </div>
       </form>

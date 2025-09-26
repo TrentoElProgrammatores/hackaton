@@ -188,12 +188,23 @@ def apiScatole(request,id):
 def iMieiOggetti(request):
     if request.user.is_anonymous:
         return redirect('home')
-    # Prende tutti gli oggetti di cui l'utente loggato è proprietario
+
+    # Prende il parametro di ricerca dalla query string
+    search_query = request.GET.get("q", "")
+
+    # Prende tutti gli oggetti dell'utente
     oggetti = Oggetto.objects.filter(proprietario=request.user)
+
+    # Se è stato inserito un termine di ricerca, filtra
+    if search_query:
+        oggetti = oggetti.filter(titolo__icontains=search_query)
+
     context = {
-        'oggetti': oggetti,
+        "oggetti": oggetti,
+        "search_query": search_query,  # 👉 da usare nel template per mantenere il valore nel campo
     }
-    return render(request, 'iMieiOggetti.html', context)
+    return render(request, "iMieiOggetti.html", context)
+
 
 @csrf_exempt
 def apiSaveItem(request):
@@ -221,26 +232,33 @@ def leMieScatole(request):
     if request.user.is_anonymous:
         return redirect('home')
 
-    # Recupera tutte le location dell'utente loggato
+    #Recupera tutte le location dell'utente loggato
     locations = Location.objects.filter(sede=request.user)
 
-    # Prende l'ID location selezionato dal filtro GET (se presente)
+    #Prende i parametri GET
     location_id = request.GET.get("location")
+    search_query = request.GET.get("q")  # nuovo campo per la ricerca per descrizione
 
     # Query base: tutte le scatole dell'utente
     scatole = Scatola.objects.filter(location__sede=request.user).order_by("-createdAt")
 
-    # Se l'utente ha selezionato una location, filtra
+    # Filtro per location
     if location_id:
         scatole = scatole.filter(location_id=location_id)
+
+    # Filtro per descrizione (ricerca parziale, case-insensitive)
+    if search_query:
+        scatole = scatole.filter(descrizione__icontains=search_query)
 
     context = {
         "scatole": scatole,
         "locations": locations,
         "selected_location": location_id,
+        "search_query": search_query,  # 👈 da usare nel template
     }
 
     return render(request, "leMieScatole.html", context)
+
 
 
 

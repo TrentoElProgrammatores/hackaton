@@ -39,3 +39,19 @@ pip install -r requirements.txt
 - [ ] stampare qr code
 - [ ] popolare database con dati sensati
 - [ ] check generale
+- filtra gli oggetti per categoria
+- aggiungi la possibilità di modificare i tuoi oggetti/scatole/location, eliminarli
+
+## feature del gestionale
+
+
+- oggetti salvati e visualizzabili con tutte le loro caratteristiche (titolo, descrizione, proprietario, foto, scatola se presente e location(luogo fisico in cui si trova l'oggetto all'interno della sede) e categoria)
+- scatole salvate e visualizzabili che contengono oggetti con descrizione
+- location in cui sono depositate le scatole
+- possibilità di muovere oggetti fra scatole
+- possibilità di aggiungere,modificare o eliminare oggetti, scatole e location
+- possibilità di scannerizzare tramite QR code gli oggetti o le scatole per avere un immediato resoconto delle caratteristiche
+- possibilità di muovere oggetti fra sedi (prestandoli)
+- cronologia dei prestiti (sede che possiede l'oggetto, sede in cui si trova l'oggetto, data di prestito)
+- possibilità di filtrare le scatole per location e cercarle per nome
+##possibilità di cercare gli oggetti per nome
