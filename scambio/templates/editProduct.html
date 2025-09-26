@@ -165,10 +165,9 @@
                              <div class="mb-3">
                                 <div class="col-md-4" id="sedeSelect">
                                     <label for="location" class="form-label">Sede *</label>
-                                    <select id="selezione" >
-                                        <option value="{{item.location.username}}">{{item.location.sede}}</option>
+                                    <select id="selezione">
                                         {% for sede in sedi %}
-                                        <option value="{{sede.username}}" class="form-select" >{{sede.nome}}</option>
+                                        <option value="{{sede.id}}" class="form-select" >{{sede.nome}}</option>
                                         {% endfor %}
                                     </select>
                                 </div>

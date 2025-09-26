@@ -162,18 +162,18 @@ def confermaPrenotazione(request, item_id):
 
 def apiLocation(request,id):
     try:
-        sede=Sede.objects.get(username=id)
+        sede=Sede.objects.get(id=id)
     except:
         print(id,'idsede')
         return redirect("home")
-    print("DIOCANE")
+    print(sede)
     locations=Location.objects.filter(sede=sede)
     locations = json.dumps([{'id': loc.id.urn.replace('urn:uuid:',''), 'nome': loc.nome} for loc in locations])
     return render(request, 'api.html',{"locations":locations})
 
 def apiScatole(request,id):
     try:
-        sede=Sede.objects.get(username=id)
+        sede=Sede.objects.get(id=id)
     except:
         return render(request, 'api.html',{"locations":[]})
 
@@ -217,7 +217,7 @@ def apiSaveItem(request):
         item.scatola=Scatola.objects.get(id=data['scatola'])
         item.location=Location.objects.get(id=data['location'])
         item.save()
-        item.location.sede=Sede.objects.get(username=data['sede'])
+        item.location.sede=Sede.objects.get(id=data['sede'])
         item.location.save()
         a=item.location
         MerceScambiata.objects.create(oggetto=item,scambio=Scambi.objects.create(da=da,a=a)).save()
