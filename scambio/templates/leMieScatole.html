@@ -73,10 +73,20 @@
         <div class="col-md-4">
           <div class="card card-object shadow-sm">
             <img src="{{ scatola.immagine.url|default:'/static/img/placeholder.png' }}" class="card-img-top" alt="{{ scatola.nome }}">
-            <div class="card-body">
+            <div class="card-body d-flex flex-column gap-2">
               <h5 class="card-title">{{ scatola.descrizione|default:"Scatola senza nome" }}</h5>
               <p class="mb-1"><strong>Location:</strong> {{ scatola.location.nome|default:"x" }}</p>
-              <a href="{% url 'oggettiInScatola' scatola.id %}" class="btn btn-primary w-100">Visualizza oggetti</a>
+              <div class="d-flex gap-2">
+                <!-- Pulsante Visualizza oggetti -->
+                <a href="{% url 'oggettiInScatola' scatola.id %}" class="btn btn-primary flex-grow-1">Visualizza oggetti</a>
+
+                <!-- Pulsante Elimina scatola -->
+                <form method="post" action="{% url 'elimina_scatola' scatola.id %}"
+                      onsubmit="return confirm('Sei sicuro di voler eliminare questa scatola? Gli oggetti all’interno non saranno eliminati ma rimarranno senza scatola.');">
+                  {% csrf_token %}
+                  <button type="submit" class="btn btn-danger">Elimina scatola</button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

@@ -49,6 +49,8 @@ urlpatterns = [
          path('oggetto/<uuid:oggetto_id>/rimuovi/', views.rimuovi_dalla_scatola, name='rimuovi_dalla_scatola'),
     path('recupero/password', views.recupero_password, name='recupero_password'),
     path("oggetto/<uuid:pk>/elimina/", views.elimina_oggetto, name="elimina_oggetto"),
+    path('scatola/<uuid:scatola_id>/elimina/', views.elimina_scatola, name='elimina_scatola'),
+
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

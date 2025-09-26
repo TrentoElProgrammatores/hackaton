@@ -359,3 +359,18 @@ def elimina_oggetto(request, pk):
         messages.success(request, "Oggetto eliminato con successo!")
         return redirect("iMieiOggetti")  # oppure la pagina che vuoi dopo l'eliminazione
     return redirect("prodotto", pk=pk)
+
+
+def elimina_scatola(request, scatola_id):
+    if request.method == "POST":
+        scatola = get_object_or_404(Scatola, id=scatola_id, location__sede=request.user)
+
+        # Svuota la scatola: tutti gli oggetti collegati diventano senza scatola
+        Oggetto.objects.filter(scatola=scatola).update(scatola=None)
+
+        # Elimina la scatola
+        scatola.delete()
+        messages.success(request, "Scatola eliminata con successo!")
+        return redirect("leMieScatole")
+
+    return redirect("leMieScatole")
