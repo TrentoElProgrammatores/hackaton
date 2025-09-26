@@ -91,12 +91,21 @@
               <canvas id="qr-code"></canvas>
             </div>
             <button id="downloadQR" class="btn btn-primary w-100 mb-2">⬇ Scarica QR Code</button>
+
             <p class="text-muted small">
               Scansiona per accedere velocemente a questo prodotto
             </p>
+            {% if item.location.sede == request.user %}
+            <p class="text-muted small">
+              il prodotto ora si trova in {{item.location}}
+            </p>
+            
+            <button onclick="cliccato()" class="btn btn-primary w-100 mb-2">Sposta o Scambia prodotto</button>{% endif %}
           </div>
+          
         </div>
       </div>
+      
     </div>
 
     <!-- History -->
@@ -110,6 +119,9 @@
   </main>
 
 <script>
+  function cliccato(){
+    window.location.href = "{% url 'editProduct' item.id %}";
+  }
   document.addEventListener("DOMContentLoaded", function() {
     // Dati prodotto per QR e cronologia
     const product = {

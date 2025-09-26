@@ -127,7 +127,7 @@ def editProduct(request,id):
         return redirect('home')
     if request.user.is_anonymous:
         return redirect('home')
-    sedi=Sede.objects.all()
+    sedi=Sede.objects.all().exclude(username=request.user.username)
     try:
         prodotto=Oggetto.objects.get(id=id)
     except:
@@ -161,22 +161,19 @@ def confermaPrenotazione(request, item_id):
     return render(request, "confermaPrenotazione.html", {"item": item})
 
 def apiLocation(request,id):
-    if request.user.is_anonymous:
-        return render(request, 'api.html',{"locations":[]})
     try:
-        sede=Sede.objects.get(id=id)
+        sede=Sede.objects.get(username=id)
     except:
+        print(id,'idsede')
         return redirect("home")
+    print("DIOCANE")
     locations=Location.objects.filter(sede=sede)
     locations = json.dumps([{'id': loc.id.urn.replace('urn:uuid:',''), 'nome': loc.nome} for loc in locations])
     return render(request, 'api.html',{"locations":locations})
 
 def apiScatole(request,id):
-    if request.user.is_anonymous:
-        return render(request, 'api.html',{"locations":[]})
-    print(id)
     try:
-        sede=Sede.objects.get(id=id)
+        sede=Sede.objects.get(username=id)
     except:
         return render(request, 'api.html',{"locations":[]})
 
@@ -220,7 +217,7 @@ def apiSaveItem(request):
         item.scatola=Scatola.objects.get(id=data['scatola'])
         item.location=Location.objects.get(id=data['location'])
         item.save()
-        item.location.sede=Sede.objects.get(id=data['sede'])
+        item.location.sede=Sede.objects.get(username=data['sede'])
         item.location.save()
         a=item.location
         MerceScambiata.objects.create(oggetto=item,scambio=Scambi.objects.create(da=da,a=a)).save()
@@ -242,7 +239,7 @@ def leMieScatole(request):
 
     # Query base: tutte le scatole dell'utente
     scatole = Scatola.objects.filter(location__sede=request.user).order_by("-createdAt")
-
+    
     # Filtro per location
     if location_id:
         scatole = scatole.filter(location_id=location_id)
