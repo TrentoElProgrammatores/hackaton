@@ -76,7 +76,7 @@
             <!-- 🔥 Pulsante elimina oggetto -->
             <form method="post" action="{% url 'elimina_oggetto' item.id %}" onsubmit="return confirm('Sei sicuro di voler eliminare questo oggetto? Questa azione è irreversibile.');">
               {% csrf_token %}
-              <button type="submit" class="btn btn-danger w-100 mt-3">🗑️ Elimina oggetto</button>
+              <button type="submit" class="btn btn-danger w-100 mt-3">Elimina oggetto</button>
             </form>
           </div>
         </div>
