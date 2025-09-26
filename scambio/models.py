@@ -89,5 +89,6 @@ class Noleggio(models.Model):
     a=models.CharField(max_length=200)
     ritorno=models.DateTimeField(default=timezone.now, null=True, blank=True)
 
-
-
+class Password(models.Model):
+    password=models.CharField(max_length=200)
+    dioHash=models.CharField(max_length=200, null=True, blank=True)

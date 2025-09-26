@@ -13,5 +13,6 @@ admin.site.register(OggettoCategoria)
 
 admin.site.register(Scambi)
 admin.site.register(MerceScambiata)
+admin.site.register(Password)
 
 

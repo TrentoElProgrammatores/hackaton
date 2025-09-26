@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verifica Account</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+
+  <!-- CASO SUCCESSO -->
+  <div class="w-full max-w-md bg-white border rounded-lg shadow">
+    <!-- Header -->
+    <div class="p-6 border-b text-center">
+      <div class="flex justify-center mb-4">
+        <!-- Icona Successo -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2l4-4m6 2a9 9 0 11-18 0a9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h1 class="text-2xl font-bold">Verifica Completata!</h1>
+      <p class="text-gray-500">Il tuo account è stato verificato con successo.</p>
+    </div>
+
+    <!-- Content -->
+    <div class="p-6 space-y-4 text-center">
+      <p class="text-sm text-gray-500">
+        Ora puoi accedere al tuo account e iniziare a utilizzare tutti i servizi.
+      </p>
+      <a href="/login" class="block w-full bg-indigo-600 text-white py-2 rounded-md hover:bg-indigo-700">
+        Accedi al tuo account
+      </a>
+    </div>
+  </div>
+
+  <!-- CASO ERRORE -->
+  <div class="hidden w-full max-w-md bg-white border rounded-lg shadow">
+    <!-- Header -->
+    <div class="p-6 border-b text-center">
+      <div class="flex justify-center mb-4">
+        <!-- Icona Errore -->
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0a9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <h1 class="text-2xl font-bold">Verifica Fallita</h1>
+      <p class="text-gray-500">Si è verificato un errore durante la verifica del tuo account.</p>
+    </div>
+
+    <!-- Content -->
+    <div class="p-6 space-y-4 text-center">
+      <p class="text-sm text-gray-500">
+        Il link di verifica potrebbe essere scaduto o non valido. <br>
+        Richiedi un nuovo link di verifica.
+      </p>
+      <div class="space-y-2">
+        <a href="/reset-password" class="block w-full border border-gray-300 py-2 rounded-md hover:bg-gray-50">
+          Richiedi nuovo link
+        </a>
+        <a href="/" class="block w-full text-gray-600 py-2 rounded-md hover:text-indigo-600">
+          Torna alla home
+        </a>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

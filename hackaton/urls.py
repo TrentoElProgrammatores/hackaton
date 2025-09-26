@@ -46,8 +46,11 @@ urlpatterns = [
     path('scatola/<uuid:scatola_id>/aggiungi-oggetto/<uuid:oggetto_id>/',
          views.aggiungi_oggetto_scatola,
          name='aggiungi_oggetto_scatola'),
-         path('oggetto/<uuid:oggetto_id>/rimuovi/', views.rimuovi_dalla_scatola, name='rimuovi_dalla_scatola')
-
-
+         path('oggetto/<uuid:oggetto_id>/rimuovi/', views.rimuovi_dalla_scatola, name='rimuovi_dalla_scatola'),
+    path('recupero/password', views.recupero_password, name='recupero_password'),
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+    
+'''
+    path('recupero/password/<str:id>', views.verifica_recupero, name='verifica_recupero'),'''

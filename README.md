@@ -29,12 +29,13 @@ pip install -r requirements.txt
 
 ## to-do
 
-- aggiungere test mail
-- login per entrare nel gestionale
-- sistemare qrcode
-- aggiungere link alla scatola nella descrizione oggetto
-- sistemare front-end
-- metterlo online
-- stampare qr code
-- popolare database con dati sensati
-- check generale
+- [x] aggiungere test mail (risolto con un log csv, meno figo ma funzionale il doppio)
+- [x] login per entrare nel gestionale
+- [x] Reimposta la password (scrauso)
+- [x] sistemare qrcode
+- [ ] aggiungere link alla scatola nella descrizione oggetto
+- [ ] sistemare front-end
+- [ ] metterlo online
+- [ ] stampare qr code
+- [ ] popolare database con dati sensati
+- [ ] check generale

@@ -156,13 +156,32 @@ class SedeLoginForm(AuthenticationForm):
     username = forms.CharField(
         max_length=150,
         widget=forms.TextInput(attrs={
-            'class': 'form-control',
+            'class': 'w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-500',
             'placeholder': 'Username'
         })
     )
     password = forms.CharField(
         widget=forms.PasswordInput(attrs={
-            'class': 'form-control',
+            'class': 'w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-500',
             'placeholder': 'Password'
         })
     )
+
+
+class PasswordLostForm(forms.Form):
+    username = forms.CharField(
+        max_length=150,
+        widget=forms.TextInput(attrs={
+            'class': 'w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-500',
+            'placeholder': 'Username',
+            'required':True
+        }),
+        required=True
+    )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'w-full border rounded-md px-3 py-2 focus:outline-none focus:ring focus:ring-indigo-500',
+            'placeholder': 'Password'
+        })
+    )
+

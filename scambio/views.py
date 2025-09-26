@@ -1,27 +1,34 @@
-from pyexpat.errors import messages
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, render,redirect
 from django.core.mail import send_mail
 from .forms import *
 from .models import *
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.conf import settings
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import csv
+from urllib.parse import quote, urlencode, unquote
 
+def sendEmail(text, to,azione):
+    with open('log_email.csv', 'a', newline='', encoding='utf-8') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([text, to, azione])
+    
 # Create your views here.
-
-
 def home(request):
+    print(unquote("pbkdf2_sha256%241000000%247kSPqGEGH2VJx6cI1Pah3t%24oBUcLtXJmZ%2BE31BviEqUFndrzkejfTCqw8YeyIZfays%3D").replace("PASS","/"))
     #print(DocumentiCliente.objects.get(utente=request.user))
     if request.user.is_authenticated:
         items=Oggetto.objects.all().exclude(location__sede=request.user)
         return render(request, 'home.html',{"items":items})
     else:
-        return render(request, 'home.html',{"items":[]})
+        return render(request, 'home.html',{"items":Oggetto.objects.all()})
 
 def addItem(request):
+    if request.user.is_anonymous:
+        return redirect('home')
     if request.method == 'POST':
         form = UploadItemForm(request.POST, request.FILES, user=request.user)
         print(form.errors)
@@ -41,7 +48,7 @@ def addItem(request):
 def prodotto(request,id):
     try:
         item=Oggetto.objects.get(id=id)
-    except Oggetto.DoesNotExist:
+    except:
         return redirect("home")
     data={'item':item}
     categoria=OggettoCategoria.objects.filter(oggetto=item).first()
@@ -52,6 +59,8 @@ def prodotto(request,id):
     return render(request, 'prodotto.html',data)
 
 def addScatola(request):
+    if request.user.is_anonymous:
+        return redirect('home')
     if request.method == 'POST':
         form = UploadScatolaForm(request.POST, request.FILES, user=request.user)
         if form.is_valid():
@@ -75,6 +84,8 @@ def addScatola(request):
 
 
 def addLocation(request):
+    if request.user.is_anonymous:
+        return redirect('home')
     if request.method == 'POST':
         form = UploadLocationForm(request.POST, request.FILES, user=request.user)
         print(form.errors)
@@ -98,8 +109,6 @@ def sedeLogin(request):
             user = form.get_user()
             login(request, user)  # Logga l'utente nella sessione
             return redirect('home')  # Sostituisci con il nome della tua dashboard
-        else:
-            messages.error(request, "Username o password non corretti")
     else:
         form = SedeLoginForm()
 
@@ -114,12 +123,18 @@ def sedeLogout(request):
 
 
 def editProduct(request,id):
+    if request.user.is_anonymous:
+        return redirect('home')
+    if request.user.is_anonymous:
+        return redirect('home')
     sedi=Sede.objects.all()
     return render(request, 'editProduct.html',{'sedi':sedi,'idprodotto':id})
 
 
 
 def confermaPrenotazione(request, item_id):
+    if request.user.is_anonymous:
+        return redirect('home')
     item = get_object_or_404(Oggetto, id=item_id)
     utente_loggato = request.user
 
@@ -140,7 +155,10 @@ def confermaPrenotazione(request, item_id):
 
     # Mostra la pagina di conferma
     return render(request, "confermaPrenotazione.html", {"item": item})
+
 def apiLocation(request,id):
+    if request.user.is_anonymous:
+        return render(request, 'api.html',{"locations":[]})
     try:
         sede=Sede.objects.get(id=id)
     except:
@@ -150,6 +168,8 @@ def apiLocation(request,id):
     return render(request, 'api.html',{"locations":locations})
 
 def apiScatole(request,id):
+    if request.user.is_anonymous:
+        return render(request, 'api.html',{"locations":[]})
     print(id)
     try:
         sede=Sede.objects.get(id=id)
@@ -163,6 +183,8 @@ def apiScatole(request,id):
 
 
 def iMieiOggetti(request):
+    if request.user.is_anonymous:
+        return redirect('home')
     # Prende tutti gli oggetti di cui l'utente loggato è proprietario
     oggetti = Oggetto.objects.filter(proprietario=request.user)
     context = {
@@ -172,6 +194,8 @@ def iMieiOggetti(request):
 
 @csrf_exempt  
 def apiSaveItem(request):
+    if request.user.is_anonymous:
+        return redirect('home')
     if request.method == 'POST':
         data = json.loads(request.body)
         print(data)
@@ -185,12 +209,16 @@ def apiSaveItem(request):
 
 
 def leMieScatole(request):
+    if request.user.is_anonymous:
+        return redirect('home')
     scatole = Scatola.objects.filter(location__sede=request.user).order_by("-createdAt")
     return render(request, "leMieScatole.html", {"scatole": scatole})
 
 
 # views.py
 def oggettiInScatola(request, scatola_id):
+    if request.user.is_anonymous:
+        return redirect('home')
     # prendi la scatola dell'utente loggato
     scatola = Scatola.objects.get(id=scatola_id)#get_object_or_404(Scatola, id=scatola_id, location__sede=request.user)
 
@@ -201,6 +229,8 @@ def oggettiInScatola(request, scatola_id):
 
 
 def aggiungi_oggetto_view(request, scatola_id):
+    if request.user.is_anonymous:
+        return redirect('home')
     scatola = get_object_or_404(Scatola, id=scatola_id)
 
     # Oggetti disponibili (non ancora in nessuna scatola)
@@ -214,6 +244,8 @@ def aggiungi_oggetto_view(request, scatola_id):
 
 
 def aggiungi_oggetto_scatola(request, scatola_id, oggetto_id):
+    if request.user.is_anonymous:
+        return redirect('home')
     scatola = get_object_or_404(Scatola, id=scatola_id)
     oggetto = get_object_or_404(Oggetto, id=oggetto_id)
 
@@ -225,6 +257,8 @@ def aggiungi_oggetto_scatola(request, scatola_id, oggetto_id):
 
 
 def rimuovi_dalla_scatola(request, oggetto_id):
+    if request.user.is_anonymous:
+        return redirect('home')
     oggetto = get_object_or_404(Oggetto, id=oggetto_id)
 
     # Salva l'ID della scatola corrente prima di rimuovere
@@ -240,3 +274,31 @@ def rimuovi_dalla_scatola(request, oggetto_id):
     else:
         return redirect('home')  # o un'altra pagina a tua scelta
 
+def recupero_password(request):
+    if request.user.is_anonymous:
+        return redirect('home')
+    
+    if request.method == 'POST':
+        form = PasswordLostForm(data=request.POST)
+        if form.is_valid():
+            # Recupera l'utente autenticato
+
+            request.user.set_password(form.cleaned_data['password'])
+            request.user.save()
+            
+            return redirect('home')  # Sostituisci con il nome della tua dashboard
+        print(form.errors)
+    else:
+        form = PasswordLostForm()
+    return render(request, 'password_reset.html', {'form': form})
+'''
+def verifica_recupero(request,id):
+    try:
+        sede=Sede.objects.get(password=unquote(id).replace("PASS",'/'))
+    except:
+        return render(request, 'verifica_recupero.html',{'validate':False})
+    print("sede",sede)
+    sede.set_password(Password.objects.get(dioHash=unquote(id).replace("PASS",'/')).password)
+    sede.save()
+    print("GODO")
+    return render(request, 'verifica_recupero.html',{'validate':True})'''
