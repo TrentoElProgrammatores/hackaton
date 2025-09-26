@@ -1,7 +1,6 @@
 __pycache__
 *.pyc
 .venv
-media
 db.sqlite3
 hackaton.code-workspace
 log_email.csv
