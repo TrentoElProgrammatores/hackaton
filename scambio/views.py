@@ -15,7 +15,7 @@ def sendEmail(text, to,azione):
     with open('log_email.csv', 'a', newline='', encoding='utf-8') as csvfile:
         writer = csv.writer(csvfile)
         writer.writerow([text, to, azione])
-    
+
 # Create your views here.
 def home(request):
     print(unquote("pbkdf2_sha256%241000000%247kSPqGEGH2VJx6cI1Pah3t%24oBUcLtXJmZ%2BE31BviEqUFndrzkejfTCqw8YeyIZfays%3D").replace("PASS","/"))
@@ -195,14 +195,14 @@ def iMieiOggetti(request):
     }
     return render(request, 'iMieiOggetti.html', context)
 
-@csrf_exempt  
+@csrf_exempt
 def apiSaveItem(request):
     if request.user.is_anonymous:
         return redirect('home')
     if request.method == 'POST':
         data = json.loads(request.body)
         print(data)
-        
+
         item=Oggetto.objects.get(id=data['id'])
         da=item.location
         item.scatola=Scatola.objects.get(id=data['scatola'])
@@ -220,8 +220,28 @@ def apiSaveItem(request):
 def leMieScatole(request):
     if request.user.is_anonymous:
         return redirect('home')
+
+    # Recupera tutte le location dell'utente loggato
+    locations = Location.objects.filter(sede=request.user)
+
+    # Prende l'ID location selezionato dal filtro GET (se presente)
+    location_id = request.GET.get("location")
+
+    # Query base: tutte le scatole dell'utente
     scatole = Scatola.objects.filter(location__sede=request.user).order_by("-createdAt")
-    return render(request, "leMieScatole.html", {"scatole": scatole})
+
+    # Se l'utente ha selezionato una location, filtra
+    if location_id:
+        scatole = scatole.filter(location_id=location_id)
+
+    context = {
+        "scatole": scatole,
+        "locations": locations,
+        "selected_location": location_id,
+    }
+
+    return render(request, "leMieScatole.html", context)
+
 
 
 # views.py
@@ -286,7 +306,7 @@ def rimuovi_dalla_scatola(request, oggetto_id):
 def recupero_password(request):
     if request.user.is_anonymous:
         return redirect('home')
-    
+
     if request.method == 'POST':
         form = PasswordLostForm(data=request.POST)
         if form.is_valid():
@@ -294,7 +314,7 @@ def recupero_password(request):
 
             request.user.set_password(form.cleaned_data['password'])
             request.user.save()
-            
+
             return redirect('home')  # Sostituisci con il nome della tua dashboard
         print(form.errors)
     else:

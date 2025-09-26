@@ -28,7 +28,27 @@
 
   <section class="objects-section">
     <div class="container">
-      <h1 class="mb-5 text-center">Le mie scatole</h1>
+      <h1 class="mb-4 text-center">Le mie scatole</h1>
+
+      <!-- 🔎 FILTRO PER LOCATION -->
+      <form method="get" class="mb-5">
+        <div class="row justify-content-center">
+          <div class="col-md-6">
+            <div class="input-group">
+              <label class="input-group-text" for="location">Filtra per location</label>
+              <select name="location" id="location" class="form-select" onchange="this.form.submit()">
+                <option value="">Tutte le location</option>
+                {% for location in locations %}
+                  <option value="{{ location.id }}" {% if selected_location == location.id|stringformat:"s" %}selected{% endif %}>
+                    {{ location.nome }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!-- 🔎 FINE FILTRO -->
 
       {% if scatole %}
       <div class="row g-4">
