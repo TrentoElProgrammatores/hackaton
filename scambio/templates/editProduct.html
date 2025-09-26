@@ -157,8 +157,8 @@
             <div class="mx-auto" style="max-width: 650px;">
                 <div class="card shadow">
                     <div class="card-header text-center">
-                        <h2 class="fw-bold">Aggiungi un Oggetto</h2>
-                        <p class="text-muted mb-0">Condividi un oggetto che vorresti scambiare con la community</p>
+                        <h2 class="fw-bold">Stai per modificare la posizione o l'appartenenza ad un oggetto</h2>
+                        <p class="text-muted mb-0">Modificare la location e inseriscilo in un altra scatola</p>
                     </div>
                     <div class="card-body">
                             <!-- Immagine -->                            
@@ -262,7 +262,7 @@ const csrftoken = getCookie('csrftoken');
             const scatolaId = scatolaSelect ? scatolaSelect.value : '';
 
             const payload = {
-                id: "{{idprodotto}}",
+                id: "{{item.id}}",
                 sede: sedeId,
                 location: locationId,
                 scatola: scatolaId
@@ -278,7 +278,7 @@ const csrftoken = getCookie('csrftoken');
             })
             .then(response => {
                 if (!response.ok) throw new Error("Errore nella richiesta");
-                window.location.href = "{% url 'prodotto' idprodotto %}";
+                window.location.href = "{% url 'prodotto' item.id %}";
                 return response.json();
             })
             .then(data => console.log("Risposta dal server:", data))

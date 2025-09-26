@@ -33,7 +33,7 @@ pip install -r requirements.txt
 - [x] login per entrare nel gestionale
 - [x] Reimposta la password (scrauso)
 - [x] sistemare qrcode
-- [X] aggiungere link alla scatola nella descrizione oggetto
+- [x] aggiungere link alla scatola nella descrizione oggetto
 - [ ] sistemare front-end
 - [ ] metterlo online
 - [ ] stampare qr code

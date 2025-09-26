@@ -54,8 +54,7 @@ def prodotto(request,id):
     categoria=OggettoCategoria.objects.filter(oggetto=item).first()
     data.update({'categoria':categoria})
     scambio=MerceScambiata.objects.filter(oggetto=item)
-    data.update({'scambi':scambio,'domain':settings.DOMINIO})
-    print("scambio",scambio)
+    data.update({'scambi':scambio.order_by('-scambio__createdAt'),'domain':settings.DOMINIO})
     return render(request, 'prodotto.html',data)
 
 def addScatola(request):
@@ -128,7 +127,11 @@ def editProduct(request,id):
     if request.user.is_anonymous:
         return redirect('home')
     sedi=Sede.objects.all()
-    return render(request, 'editProduct.html',{'sedi':sedi,'idprodotto':id})
+    try:
+        prodotto=Oggetto.objects.get(id=id)
+    except:
+        return redirect("home")
+    return render(request, 'editProduct.html',{'sedi':sedi,'item':prodotto})
 
 
 
@@ -199,10 +202,16 @@ def apiSaveItem(request):
     if request.method == 'POST':
         data = json.loads(request.body)
         print(data)
+        
         item=Oggetto.objects.get(id=data['id'])
+        da=item.location
         item.scatola=Scatola.objects.get(id=data['scatola'])
         item.location=Location.objects.get(id=data['location'])
         item.save()
+        item.location.sede=Sede.objects.get(id=data['sede'])
+        item.location.save()
+        a=item.location
+        MerceScambiata.objects.create(oggetto=item,scambio=Scambi.objects.create(da=da,a=a)).save()
         return JsonResponse({'success': True}, status=200)
 
     return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
