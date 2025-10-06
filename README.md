@@ -25,8 +25,6 @@ pip install -r requirements.txt
 
 # Management System Features
 
-## Problems:
-
 ## Circular stage designs: how to avoid wasting materials.
 “Every time we don’t know who has the materials, so we end up buying new ones.”
 
