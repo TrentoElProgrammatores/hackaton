@@ -23,20 +23,20 @@ pip install -r requirements.txt
 - [x] Add rental
 - [x] Product details
 
-## Management System Features
+# Management System Features
 
-##Problems:
+## Problems:
 
-#Circular stage designs: how to avoid wasting materials.
+## Circular stage designs: how to avoid wasting materials.
 “Every time we don’t know who has the materials, so we end up buying new ones.”
 
-#Issue:
+## Issue:
 -Inefficient management of stage materials and available technologies (equipment, microphones, setups, etc.), which often get lost or damaged.
 
-#Approach:
+## Approach:
 -Create a digital and physical system for booking, exchanging, and reusing materials, imagining different models (e.g., free exchange between theater companies, paid rentals for external users, etc.).
 
-#Solutions and Features of Our Management System
+## Solutions and Features of Our Management System
 -Objects can be saved and displayed with all their characteristics (title, description, owner, photo, box if present, location — the physical place within the venue — and category)
 -Boxes can be saved and displayed, containing objects with descriptions
 -Locations where boxes are stored
@@ -48,6 +48,6 @@ pip install -r requirements.txt
 -Ability to filter boxes by location and search by name
 -Ability to search for objects by name
 
-##Online Presentation
+## Online Presentation
 https://www.canva.com/design/DAG0FLCYaME/02NOu2HPJiI1sDkfgu7x3A/edit?utm_content=DAG0FLCYaME&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
