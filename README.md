@@ -1,10 +1,10 @@
 # Hackaton Teatro 4D
 
-> Gestionale Rete 4D Teatro
+> 4D Theater Network Management System
 
-## Utilizzo
+## Usage
 
-installa il venv:
+Install the virtual environment:
 
 ```sh
 python3 -m venv .venv
@@ -14,45 +14,40 @@ pip install -r requirements.txt
 
 
 
-## pagine create
+## Created Pages
 
-- [x] home
-- [x] dettaglio prodotti
-- [x] cronologia scambi/prodotti
-- [x] inserimento prodotto
-- [x] aggiungi noleggio
-- [x] dettaglio prodotti
+- [x] Home
+- [x] Product details
+- [x] Product/exchange history
+- [x] Add product
+- [x] Add rental
+- [x] Product details
 
-## feature del gestionale
+## Management System Features
 
-problematiche:
+##Problems:
 
-Scenografie circolari: come non sprecare materiali
-«Ogni volta non sappiamo chi ha i materiali, si finisce per
-comprarne di nuovi»
-Problematica:
-Gestione inefficiente dei materiali scenici e delle tecnologie a
-disposizione (strumentazioni, microfoni, allestimenti, etc.) che
-spesso vengono smarriti o danneggiati.
-Approccio:
-Creare un sistema di prenotazione, scambio e riuso (digitale e
-fisico), immaginando diversi approcci (ad esempio, di scambio
-gratuito tra le compagnie, di noleggio a pagamento verso l’esterno,
-etc.).
+#Circular stage designs: how to avoid wasting materials.
+“Every time we don’t know who has the materials, so we end up buying new ones.”
 
-soluzioni e features del nostro gestionale:
+#Issue:
+-Inefficient management of stage materials and available technologies (equipment, microphones, setups, etc.), which often get lost or damaged.
 
-- oggetti salvati e visualizzabili con tutte le loro caratteristiche (titolo, descrizione, proprietario, foto, scatola se presente e location(luogo fisico in cui si trova l'oggetto all'interno della sede) e categoria)
-- scatole salvate e visualizzabili che contengono oggetti con descrizione
-- location in cui sono depositate le scatole
-- possibilità di muovere oggetti fra scatole
-- possibilità di aggiungere o eliminare oggetti, scatole e location
-- possibilità di scannerizzare tramite QR code gli oggetti o le scatole per avere un immediato resoconto delle caratteristiche
-- possibilità di muovere oggetti fra sedi (prestandoli)
-- cronologia dei prestiti (sede che possiede l'oggetto, sede in cui si trova l'oggetto, data di prestito)
-- possibilità di filtrare le scatole per location e cercarle per nome
-- possibilità di cercare gli oggetti per nome
+#Approach:
+-Create a digital and physical system for booking, exchanging, and reusing materials, imagining different models (e.g., free exchange between theater companies, paid rentals for external users, etc.).
 
+#Solutions and Features of Our Management System
+-Objects can be saved and displayed with all their characteristics (title, description, owner, photo, box if present, location — the physical place within the venue — and category)
+-Boxes can be saved and displayed, containing objects with descriptions
+-Locations where boxes are stored
+-Ability to move objects between boxes
+-Ability to add or delete objects, boxes, and locations
+-Ability to scan objects or boxes via QR code for an instant overview of their characteristics
+-Ability to transfer objects between venues (lending system)
+-Loan history (venue owning the object, venue currently holding the object, loan date)
+-Ability to filter boxes by location and search by name
+-Ability to search for objects by name
 
-presentazione online https://www.canva.com/design/DAG0FLCYaME/02NOu2HPJiI1sDkfgu7x3A/edit?utm_content=DAG0FLCYaME&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
+##Online Presentation
+https://www.canva.com/design/DAG0FLCYaME/02NOu2HPJiI1sDkfgu7x3A/edit?utm_content=DAG0FLCYaME&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
 
