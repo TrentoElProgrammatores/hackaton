@@ -145,5 +145,5 @@ DEFAULT_FROM_EMAIL = 'noreply@tuosito.com'
 # DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
-DOMINIO = "http://localhost:8000"
+DOMINIO = "https://root.tail0033b.ts.net"
 
